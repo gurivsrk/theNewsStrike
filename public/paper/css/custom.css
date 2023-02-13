@@ -1,0 +1,24 @@
+.blur-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #ffffff3b;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+    max-width: 100%;
+    height: 100%;
+    display: grid;
+    align-items: center;
+}
+.blur-bg .card {
+background-color: #8c0000;
+color: #ffffff;
+}
+.blur-bg .card .btn.btn-link{
+    color: #ffffff;
+}
+.blur-bg .card .btn.btn-link:hover{
+    color: #000000 !important;
+    background: #fff !important;
+    padding: 0 10px !important;
+}
