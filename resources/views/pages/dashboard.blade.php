@@ -6,6 +6,8 @@
 @section('content')
     <div class="content">
         <div class="row">
+
+
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
                     <div class="card-body ">
@@ -182,8 +184,9 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-            demo.initChartsPages();
+            // Javascript method's body can be found in assets/assets-for-demo/js/custom.js
+            custom.initChartsPages();
         });
     </script>
+
 @endpush

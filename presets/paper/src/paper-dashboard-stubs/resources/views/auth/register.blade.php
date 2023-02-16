@@ -136,13 +136,13 @@
                 </div>
              </div>
         </div>
-     </div> 
+     </div>
 @endsection
 
 @push('scripts')
     <script>
         $(document).ready(function() {
-            demo.checkFullPageBackgroundImage();
+            custom.checkFullPageBackgroundImage();
         });
     </script>
 @endpush

@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\Storage;
+use App\Models\fileSystem;
 
 trait FileHandler{
 
@@ -10,13 +11,18 @@ trait FileHandler{
         $img_name = $file->getClientOriginalName();
         $filename = ($isName == false) ? date('his') . '-' . $img_name : $img_name ;
         $img_name = $file->storePubliclyAs($loc, $filename,'public');
-        return '/storage/'.$img_name;
+        $url = '/storage/'.$img_name;
+        fileSystem::create([
+            'fileUrl' => $url,
+            'fileName' => $filename,
+            'fileMime' => $file->getMimeType(),
+            'fileSize' => $file->getSize()
+        ]);
+        return  $url;
     }
 
     public function updateMedia($oldFile,$file,$loc){
             $old = pathinfo($oldFile,PATHINFO_BASENAME);
-            //echo $file_name;
-            // echo 'public/'.$loc.'/'.$old;
             if(Storage::delete('public/'.$loc.'/'.$old)){
                 return $this->addMedia($file,$loc);
             }

@@ -1,3 +1,6 @@
+:root{
+    --bordercolor : #9d9d9d;
+}
 .blur-bg {
     position: fixed;
     top: 0;
@@ -21,4 +24,92 @@ color: #ffffff;
     color: #000000 !important;
     background: #fff !important;
     padding: 0 10px !important;
+}
+#uploadMedia{
+    display: none;
+}
+.dropzone {
+    border: 2px dashed rgba(0,0,0,.3) !important;
+    border-radius: 5px;
+}
+.img-thumbnail{
+    min-height: 175px;
+    object-fit: cover;
+    object-position: center;
+    max-height: 175px;
+    width: 165px;
+}
+:checked+label .img-thumbnail {
+    border-color: #009eed;
+}
+.btn{
+    padding: 5px 15px;
+}
+.toolbar .navbar{
+    min-height: auto;
+}
+.btn:disabled,
+.btn-outline-primary:disabled{
+    border-color: var(--bordercolor) !important;
+    color: var(--bordercolor);
+}
+#mediaModel{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    padding: 3%;
+    z-index: 10000;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+#model-body {
+    background: #fff;
+    max-height: calc(100vh - 75px);
+    overflow: hidden;
+    width: 100%;
+    padding: 20px;
+}
+#model-body img {
+    width: 100%;
+    max-height: calc(100vh - 145px);
+    object-fit: contain;
+}
+#model-body hr{
+    border-color:var(--bordercolor);
+}
+#model-body .col-sm-5 {
+    border-left: 1px solid var(--bordercolor);
+    overflow-y: scroll;
+    height: calc(100vh - 145px);
+    box-shadow: inset 0 4px 4px -4px rgb(0 0 0 / 36%);
+}
+#model-body .form-group{
+    display: grid;
+}
+#model-body .form-group label{
+    font-size: 12px;
+    font-weight: 600;
+}
+.images-details p {
+    font-size: 12px;
+    font-weight: 600;
+}
+.images-details p span{
+    font-size: 12px;
+    font-weight: 500;
+}
+.close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 6px 10px;
+    background: #ff000024;
+    opacity: 1;
+}
+.close:hover{
+    opacity: 1;
+    color: #fff;
+    background: #f00;
 }

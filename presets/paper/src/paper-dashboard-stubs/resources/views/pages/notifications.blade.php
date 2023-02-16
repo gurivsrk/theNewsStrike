@@ -135,15 +135,15 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <button class="btn btn-primary btn-block"
-                                                onclick="demo.showNotification('top','left')">Top Left</button>
+                                                onclick="custom.showNotification('top','left')">Top Left</button>
                                         </div>
                                         <div class="col-md-4">
                                             <button class="btn btn-primary btn-block"
-                                                onclick="demo.showNotification('top','center')">Top Center</button>
+                                                onclick="custom.showNotification('top','center')">Top Center</button>
                                         </div>
                                         <div class="col-md-4">
                                             <button class="btn btn-primary btn-block"
-                                                onclick="demo.showNotification('top','right')">Top Right</button>
+                                                onclick="custom.showNotification('top','right')">Top Right</button>
                                         </div>
                                     </div>
                                 </div>
@@ -153,15 +153,15 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <button class="btn btn-primary btn-block"
-                                                onclick="demo.showNotification('bottom','left')">Bottom Left</button>
+                                                onclick="custom.showNotification('bottom','left')">Bottom Left</button>
                                         </div>
                                         <div class="col-md-4">
                                             <button class="btn btn-primary btn-block"
-                                                onclick="demo.showNotification('bottom','center')">Bottom Center</button>
+                                                onclick="custom.showNotification('bottom','center')">Bottom Center</button>
                                         </div>
                                         <div class="col-md-4">
                                             <button class="btn btn-primary btn-block"
-                                                onclick="demo.showNotification('bottom','right')">Bottom Right</button>
+                                                onclick="custom.showNotification('bottom','right')">Bottom Right</button>
                                         </div>
                                     </div>
                                 </div>

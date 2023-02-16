@@ -41,18 +41,57 @@
     <script src="{{ asset('paper') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('paper') }}/js/core/bootstrap.min.js"></script>
     <script src="{{ asset('paper') }}/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-    <!--  Google Maps Plugin    -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+    {{-- <!--  Google Maps Plugin    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> --}}
     <!-- Chart JS -->
     <script src="{{ asset('paper') }}/js/plugins/chartjs.min.js"></script>
     <!--  Notifications Plugin    -->
     <script src="{{ asset('paper') }}/js/plugins/bootstrap-notify.js"></script>
     <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('paper') }}/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
-    <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-    <script src="{{ asset('paper') }}/js/custom.js"></script>
 
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+
+    <script src="{{ asset('paper') }}/js/custom.js"></script>
+
+
+    {{-- <x-alert type="danger" message="test"/> --}}
+
+    <script>
+       const search = document.getElementById('ajaxSearch'),
+       dataFor = search.getAttribute('data-for'),
+       hideDiv = search.getAttribute('data-hide');
+
+        search.addEventListener('keyup',function(){
+            const $this = this
+            if($this.value.length >= 3){
+                $.ajax({
+                    type: 'post',
+                    url:'{{route("process.ajaxRequest")}}',
+                    headers:{
+                        'X-CSRF-TOKEN' : '{{csrf_token()}}'
+                    },
+                    data : {'search':$this.value,dataFor},
+                    beforeSend: ()=>{
+
+                    },
+                    success: (response)=>{
+                        document.getElementById(hideDiv).style.display = "none"
+                        $('#ajaxResult').show().html(response)
+                    },
+                    error: (err)=>{
+                        console.error(err.responseJSON.message)
+                    }
+                })
+            }
+            else{
+                document.getElementById(hideDiv).style.display = "block";
+                $('#ajaxResult').hide()
+            }
+        })
+    </script>
+
+
     @stack('scripts')
 </body>
 

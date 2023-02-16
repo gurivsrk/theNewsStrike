@@ -24,9 +24,9 @@
 @endsection
 
 @push('scripts')
-    <script>
+    {{-- <script>
         $(document).ready(function() {
-            demo.checkFullPageBackgroundImage();
+            custom.checkFullPageBackgroundImage();
         });
-    </script>
+    </script> --}}
 @endpush

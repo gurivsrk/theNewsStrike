@@ -18,6 +18,14 @@
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
+            @can('editor')
+            <li class="{{ @$elementActive == 'gallery' ? 'active' : '' }}">
+                <a href="{{ route('gallery.index') }}">
+                    <i class="nc-icon nc-image"></i>
+                    <p>{{ __('Gallery') }}</p>
+                </a>
+            </li>
+            @endcan
             @can('admin')
             <li class="{{ @$elementActive == 'generalSetting' ? 'active' : '' }}">
                 <a href="{{ route('page.index', 'dashboard') }}">
@@ -91,3 +99,4 @@
     </div>
     @endcan
 </div>
+

@@ -23,7 +23,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            demo.initGoogleMaps();
+            custom.initGoogleMaps();
         });
   </script>
 @endpush

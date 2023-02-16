@@ -51,7 +51,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            demo.checkFullPageBackgroundImage();
+            custom.checkFullPageBackgroundImage();
         });
     </script>
 @endpush

@@ -156,8 +156,8 @@ The documentation for the Paper Dashboard Laravel is hosted at our [website](htt
     │   │   ├── paper-dashboard.css.map
     │   │   └── paper-dashboard.min.css
     │   ├── demo
-    │   │   ├── demo.css
-    │   │   └── demo.js
+    │   │   ├── custom.css
+    │   │   └── custom.js
     │   ├── fonts
     │   │   ├── nucleo-icons.eot
     │   │   ├── nucleo-icons.ttf

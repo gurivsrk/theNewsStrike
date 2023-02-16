@@ -7,16 +7,28 @@ use App\Models\gallery;
 use App\Http\Requests\StoregalleryRequest;
 use App\Http\Requests\UpdategalleryRequest;
 
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use App\Models\fileSystem;
+use App\Traits\FileHandler;
+use Exception;
+
 class GalleryController extends Controller
 {
+
+    use FileHandler;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(fileSystem $media)
     {
-        //
+        $media = $media->get();
+        return view('admin.gallery',compact(['media']));
     }
 
     /**
@@ -35,9 +47,18 @@ class GalleryController extends Controller
      * @param  \App\Http\Requests\StoregalleryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoregalleryRequest $request)
+    public function store(StoregalleryRequest $request, fileSystem $media)
     {
-        //
+
+        try{
+            $this->addMedia($request->file('dropZoneImage'),'media');
+            $media = $media->all();
+            return view('partials.galleryView',compact(['media']));
+        }
+        catch(Exception $err){
+            return $err;
+        }
+
     }
 
     /**
@@ -82,6 +103,19 @@ class GalleryController extends Controller
      */
     public function destroy(gallery $gallery)
     {
-        //
+        abort_if(Gate::denies('admin'), Response::HTTP_UNAUTHORIZED, '401 unauthorized');
+    }
+
+    public function massDestroy(Request $request)
+    {
+       $media = fileSystem::whereIn('id',$request->post('ids'))->get();
+        foreach ($media as $media) {
+            if(Storage::delete('public/media/'.$media->fileName)){
+                $media->delete();
+            }
+        }
+
+        $media = $media->all();
+        return view('partials.galleryView',compact(['media']));
     }
 }

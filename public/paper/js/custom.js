@@ -1,4 +1,4 @@
-demo = {
+custom = {
   initPickColor: function() {
     $('.pick-class-label').click(function() {
       var new_class = $(this).attr('new-class');
@@ -398,12 +398,11 @@ demo = {
     marker.setMap(map);
   },
 
-  showNotification: function(from, align) {
-    color = 'primary';
+  showNotification: function(from, align, message = "Welcome to <b>Paper Dashboard</b> - a beautiful bootstrap dashboard for every web developer.", color = 'primary') {
 
     $.notify({
       icon: "nc-icon nc-bell-55",
-      message: "Welcome to <b>Paper Dashboard</b> - a beautiful bootstrap dashboard for every web developer."
+      message
 
     }, {
       type: color,
@@ -413,6 +412,43 @@ demo = {
         align: align
       }
     });
-  }
+  },
 
+  bulkSelect:function(inp){
+    const iput = inp.getAttribute('data-class');
+
+    if(inp.innerHTML == "Bulk Select"){
+        inp.innerHTML = 'cancel';
+        $('#deletePermanently').removeClass('d-none')
+    }else{
+        inp.innerHTML = 'Bulk Select';
+        $('#deletePermanently').addClass('d-none')
+    }
+
+    $.each($('.'+iput),function(){
+        let disAttr = $(this).attr('disabled')
+
+        if(typeof disAttr == 'string'){
+            $(this).removeAttr('disabled')
+        }
+        else{
+            this.checked = false;
+            $(this).attr('disabled','disabled')
+        }
+    })
+
+  }
 };
+
+$('.toggleBtn').on('click',function(){
+
+    const $this = $(this),
+        id = $this.data('id');
+
+    $('#'+id).slideToggle()
+    if($this.text() == "Add Media"){
+        $this.text('Close')
+    }else{
+        $this.text('Add Media')
+    }
+})
