@@ -398,7 +398,7 @@ custom = {
     marker.setMap(map);
   },
 
-  showNotification: function(from, align, message = "Welcome to <b>Paper Dashboard</b> - a beautiful bootstrap dashboard for every web developer.", color = 'primary') {
+  showNotification: function(from, align, message = "Alert", color = 'primary') {
 
     $.notify({
       icon: "nc-icon nc-bell-55",
@@ -428,7 +428,10 @@ custom = {
     $.each($('.'+iput),function(){
         let disAttr = $(this).attr('disabled')
 
+        $(this).next().toggleClass('showModel')
+
         if(typeof disAttr == 'string'){
+
             $(this).removeAttr('disabled')
         }
         else{
@@ -451,4 +454,32 @@ $('.toggleBtn').on('click',function(){
     }else{
         $this.text('Add Media')
     }
+})
+
+// copy to clipboard function
+function copyToClipboard($this){
+   navigator.clipboard.writeText($this.value);
+   custom.showNotification('top','right', 'copy to clipboard','success')
+}
+
+//close function
+function closeModel(parent){
+    document.getElementById(parent).style.display = "none"
+}
+
+// show Model
+
+$('.showModel').on('click',function(){
+    let id= this.getAttribute('for')
+    ajaxCall(
+        'http://127.0.0.1:8001/process/ajax-requests',
+        {'search':id,'dataFor':'showModel'},
+        (response)=>{
+            //console.log(response)
+             $('#ajaxShowModel').html(response)
+        },
+        (err)=>{
+            console.error(err.responseJSON.message)
+        }
+    )
 })

@@ -63,32 +63,41 @@
        hideDiv = search.getAttribute('data-hide');
 
         search.addEventListener('keyup',function(){
-            const $this = this
-            if($this.value.length >= 3){
-                $.ajax({
-                    type: 'post',
-                    url:'{{route("process.ajaxRequest")}}',
-                    headers:{
-                        'X-CSRF-TOKEN' : '{{csrf_token()}}'
-                    },
-                    data : {'search':$this.value,dataFor},
-                    beforeSend: ()=>{
+            const $this = this;
 
-                    },
-                    success: (response)=>{
+                ajaxCall(
+                    '{{route("process.ajaxRequest")}}',
+                    {'search':$this.value,dataFor},
+                    (response)=>{
                         document.getElementById(hideDiv).style.display = "none"
                         $('#ajaxResult').show().html(response)
                     },
-                    error: (err)=>{
+                    (err)=>{
                         console.error(err.responseJSON.message)
                     }
-                })
-            }
-            else{
-                document.getElementById(hideDiv).style.display = "block";
-                $('#ajaxResult').hide()
-            }
+                )
+
         })
+
+        function ajaxCall(url,data,successCallBack,errorCallBack,beforeCallBack){
+            $.ajax({
+                    type: 'post',
+                    url:url,
+                    headers:{
+                        'X-CSRF-TOKEN' : '{{csrf_token()}}'
+                    },
+                    data : data,
+                    beforeSend: ()=>{
+                        typeof(beforeCallBack) == 'function' ? beforeCallBack() :'';
+                    },
+                    success: (response)=>{
+                        successCallBack(response)
+                    },
+                    error: (err)=>{
+                        errorCallBack(err)
+                    }
+                })
+        }
     </script>
 
 

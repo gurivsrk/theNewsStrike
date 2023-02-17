@@ -54,52 +54,7 @@
         </div>
     </div>
 
-    <div id="mediaModel">
-        <div id="model-body" class="position-relative">
-            <div class="close">X</div>
-            <div class="model-body">
-                <h6 class="m-0 py-0 px-3"><b>Image Details:</b></h6>
-                <hr class="m-0">
-                    <div class="row">
-                    <div id="images" class="col-sm-7 mt-2">
-                        <img src="http://127.0.0.1:8001/storage/media/091603-rohit-min.jpg">
-                    </div>
-                    <div id="images-details" class="col-sm-5">
-                        <div class="images-details mt-2">
-                            <p class="mb-1">Uploaded on: <span>February 16, 2023</span></p>
-                            <p class="mb-1">Uploaded by: <span>Ruchi shrivastava</span></p>
-                            <p class="mb-1">Uploaded to: <span>Urbanfry Homes Netra Modern Sideboard Cabinet</span></p>
-                            <p class="mb-1">File name: <span>9-1.png</span></p>
-                            <p class="mb-1">File type: <span>image/png</span></p>
-                            <p class="mb-1">File size: <span>611 KB</span></p>
-                            <p class="mb-1">Dimensions: <span>600 by 600 pixels</span></p>
-                        </div><hr>
-                        <div class="img-form">
-                            <form action="#" method="post">
-                                @csrf
-                                <div class="form-group">
-                                    <label>Alternative Text</label>
-                                    <input name="alt" class="form-input">
-                                </div>
-                                <div class="form-group">
-                                    <label>Title</label>
-                                    <input name="title" class="form-input">
-                                </div>
-                                <div class="form-group">
-                                    <label>Caption</label>
-                                    <textarea name="caption" class="form-input"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea name="description" class="form-input"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="ajaxShowModel"></div>
 
     @push('scripts')
     <script>
@@ -135,6 +90,7 @@
                return _results
            }
        };
+
        $('#deletePermanently').on('click',function(){
         if($('input[name="mediaCheckbox"]:checked').length > 0){
             if(prompt('Enter DELETE for bulk deletion') == 'DELETE'){
@@ -149,23 +105,18 @@
                     }
                 }
 
-                $.ajax({
-                    type:'post',
-                    url:'{{route("gallery.massDelete")}}',
-                    headers:{
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    },
-                    data: {ids},
-                    beforeSend:()=>{
-                        $this.attr('disabled','disabled')
-                    },
-                    success: (response)=>{
-                        location.reload()
-                    },
-                    error: (err)=>{
-                        custom.showNotification('top','right',err.responseJSON.message+'! Only admin can perfom this action','danger')
-                        console.error(err.responseJSON.message)
-                    }
+                ajaxCall(
+                '{{route("gallery.massDelete")}}',
+                {ids},
+                (response)=>{
+                    $('#media').hide();
+                    $('#ajaxResult').html(response);
+                    custom.showNotification('top','right','Deleted Successfully','success')
+                },(err)=>{
+                    custom.showNotification('top','right',err.responseJSON.message+'! Only admin can perfom this action','danger')
+                    console.error(err.responseJSON.message)
+                },()=>{
+                    $this.attr('disabled','disabled')
                 })
             }
         }

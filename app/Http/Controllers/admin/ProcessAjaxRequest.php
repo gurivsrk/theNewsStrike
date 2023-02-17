@@ -12,11 +12,28 @@ class ProcessAjaxRequest extends Controller
     public function ajaxRequest(Request $request){
         switch($request->post('dataFor')){
             case 'gallery':
-               $media = fileSystem::where('fileName','LIKE','%'.$request->post('search').'%')
-                ->orWhere('alt','LIKE','%'.$request->post('search').'%')
-                ->get();
+               $media = $this->getResult(new fileSystem, $request->post('search'), 'fileName', 'alt');
                 return view('partials.galleryView',compact(['media']));
             break;
+            case 'showModel':
+                $media = fileSystem::findOrFail($request->post('search'));
+                return view('partials.galleryModel',compact(['media']));
+            break;
+            case 'updateImageDetails':
+                $media = fileSystem::findOrFail($request->post('id'));
+                $media->update([
+                    $request->post('type') => $request->post('data')
+                ]);
+                return true;
+            break;
         }
+
+    }
+
+    protected function getResult($tableObj, $search, $column1,$column2)
+    {
+        return $tableObj->where($column1,'LIKE','%'.$search.'%')
+                ->orWhere($column2,'LIKE','%'.$search.'%')
+                ->get();
     }
 }
