@@ -29,7 +29,10 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "LaravelFrontendPresets\\PaperPreset\\": "presets/paper/src"
-        }
+        },
+        "files": [
+            "app/helpers/helper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

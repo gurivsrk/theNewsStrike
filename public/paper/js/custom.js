@@ -431,7 +431,6 @@ custom = {
         $(this).next().toggleClass('showModel')
 
         if(typeof disAttr == 'string'){
-
             $(this).removeAttr('disabled')
         }
         else{
@@ -440,21 +439,59 @@ custom = {
         }
     })
 
-  }
-};
+  },
 
-$('.toggleBtn').on('click',function(){
+  toggleBtn:function($this){
 
-    const $this = $(this),
-        id = $this.data('id');
+      const id = $this.getAttribute('data-id');
 
-    $('#'+id).slideToggle()
-    if($this.text() == "Add Media"){
-        $this.text('Close')
-    }else{
-        $this.text('Add Media')
+      $('#'+id).slideToggle()
+      if($this.innerHTML == "Add Media"){
+          $this.innerHTML = 'Close'
+      }else{
+          $this.innerHTML = 'Add Media'
+      }
+  },
+
+  showImgDetailMode:function($this){
+    let id= $this.getAttribute('for');
+    if($this.classList.contains('showModel')){
+        ajaxCall(
+            'http://127.0.0.1:8001/process/ajax-requests',
+            {'search':id,'dataFor':'showModel'},
+            (response)=>{
+                //console.log(response)
+                 $('#ajaxShowModel').html(response)
+                 $('#mediaModel').show()
+            },
+            (err)=>{
+                console.error(err.responseJSON.message)
+            }
+        )
     }
-})
+    else if($this.classList.contains('selectThis')){
+
+        for(let check of document.getElementsByClassName('media-checkbox')){
+            check.checked = false;
+            check.disabled = true;
+        }
+
+        let boxId = $this.getAttribute('for')
+            document.getElementById(boxId).disabled = false;
+    }
+  },
+
+  insertImage:function(){
+        if(document.querySelector('input[name=mediaCheckbox]:checked')){
+            console.log('yes')
+        }
+        else{
+            alert('Please select one image')
+        }
+  }
+
+
+};
 
 // copy to clipboard function
 function copyToClipboard($this){
@@ -469,17 +506,23 @@ function closeModel(parent){
 
 // show Model
 
-$('.showModel').on('click',function(){
-    let id= this.getAttribute('for')
+$('.getImageAjax').on('click',function(event){
+    event.preventDefault();
     ajaxCall(
         'http://127.0.0.1:8001/process/ajax-requests',
-        {'search':id,'dataFor':'showModel'},
+        {'dataFor':'showImageAjax'},
         (response)=>{
             //console.log(response)
-             $('#ajaxShowModel').html(response)
+            $('#showImageAjax').html(response)
+            $('#selectMediaModel').show()
+            ajaxSearch()
+            var dropZone = new Dropzone("#dropZone-file-upload")
         },
         (err)=>{
             console.error(err.responseJSON.message)
         }
     )
-})
+
+
+});
+

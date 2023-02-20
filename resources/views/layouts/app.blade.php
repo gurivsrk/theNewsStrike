@@ -24,6 +24,10 @@
 
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     {{-- {{ HTML::style('css/basic.css');}} --}}
+    @stack('css')
+    <!-- Custom Code Head-->
+    {{customCode('head')}}
+    <!--End Custom Code Head-->
 </head>
 
 <body class="{{ @$class }}">
@@ -35,6 +39,13 @@
     @guest
         @include('layouts.page_templates.guest')
     @endguest
+
+    <div id="selectMediaModel">
+        <div id="select-Media-Model-body" class="position-relative">
+            <div class="close" onclick="closeModel('selectMediaModel')" >X</div>
+        </div>
+        <div id="showImageAjax"></div>
+    </div>
 
     <!--   Core JS Files   -->
     <script src="{{ asset('paper') }}/js/core/jquery.min.js"></script>
@@ -50,7 +61,7 @@
     <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('paper') }}/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
 
-    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <script src="{{asset('paper')}}/js/plugins/dropzone5.js"></script>
 
     <script src="{{ asset('paper') }}/js/custom.js"></script>
 
@@ -58,26 +69,67 @@
     {{-- <x-alert type="danger" message="test"/> --}}
 
     <script>
-       const search = document.getElementById('ajaxSearch'),
-       dataFor = search.getAttribute('data-for'),
-       hideDiv = search.getAttribute('data-hide');
+        ajaxSearch()
 
-        search.addEventListener('keyup',function(){
-            const $this = this;
+        Dropzone.options.dropZoneFileUpload = {
+        url: '{{route("gallery.store")}}',
+        maxFilesize: 20, // MB
+        acceptedFiles: '.jpeg,.jpg,.png,.gif',
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        paramName: 'dropZoneImage',
+        success: function (file, response) {
+            $('.dz-preview.dz-image-preview').remove();
+            $('.dz-message').show();
+            $('#media').hide();
+            $('#add-media').text('Add Media')
+            $('#uploadMedia').slideUp();
+            $('#ajaxResult').html(response);
+        },
+        error: function (file, response) {
+            console.log(response)
+            if ($.type(response) === 'string') {
+                var message = response //dropzone sends it's own error messages in string
+            } else {
+                var message = response.errors.file
+            }
+            file.previewElement.classList.add('dz-error')
+            _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+            _results = []
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                node = _ref[_i]
+                _results.push(node.textContent = response.message)
+            }
 
-                ajaxCall(
-                    '{{route("process.ajaxRequest")}}',
-                    {'search':$this.value,dataFor},
-                    (response)=>{
-                        document.getElementById(hideDiv).style.display = "none"
-                        $('#ajaxResult').show().html(response)
-                    },
-                    (err)=>{
-                        console.error(err.responseJSON.message)
-                    }
-                )
+            return _results
+        }
+        };
 
-        })
+        function ajaxSearch(){
+            if(document.getElementById('ajaxSearch')){
+                const search = document.getElementById('ajaxSearch');
+                const  dataFor = search.getAttribute('data-for'),
+                hideDiv = search.getAttribute('data-hide');
+
+                search.addEventListener('keyup',function(){
+                    const $this = this;
+
+                        ajaxCall(
+                            '{{route("process.ajaxRequest")}}',
+                            {'search':$this.value,dataFor},
+                            (response)=>{
+                                document.getElementById(hideDiv).style.display = "none"
+                                $('#ajaxResult').show().html(response)
+                            },
+                            (err)=>{
+                                console.error(err.responseJSON.message)
+                            }
+                        )
+                    })
+            }
+        }
+
 
         function ajaxCall(url,data,successCallBack,errorCallBack,beforeCallBack){
             $.ajax({

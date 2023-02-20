@@ -1,11 +1,11 @@
 <div class="sidebar" data-color="black" data-active-color="primary">
     <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+        <a href="#" class="simple-text logo-mini">
             <div class="logo-image-small">
                 <img src="{{ asset('paper') }}/img/logo-small.png">
             </div>
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="#" class="simple-text logo-normal">
             {{ __('Creative Tim') }}
         </a>
     </div>
@@ -18,6 +18,14 @@
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
+            @can('admin')
+            <li class="{{ @$elementActive == 'customCode' ? 'active' : '' }}">
+                <a href="{{ route('custom-code.index', 'gd') }}">
+                    <i class="nc-icon nc-html5"></i>
+                    <p>{{ __('Custom Code') }}</p>
+                </a>
+            </li>
+            @endcan
             @can('editor')
             <li class="{{ @$elementActive == 'gallery' ? 'active' : '' }}">
                 <a href="{{ route('gallery.index') }}">
@@ -27,10 +35,10 @@
             </li>
             @endcan
             @can('admin')
-            <li class="{{ @$elementActive == 'generalSetting' ? 'active' : '' }}">
-                <a href="{{ route('page.index', 'dashboard') }}">
+            <li class="{{ @$elementActive == 'Customization' ? 'active' : '' }}">
+                <a href="{{ route('staticPages.edit', 'gd') }}">
                     <i class="nc-icon nc-settings-gear-65"></i>
-                    <p>{{ __('General Setting') }}</p>
+                    <p>{{ __('Customization') }}</p>
                 </a>
             </li>
             @endcan

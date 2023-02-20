@@ -19,6 +19,10 @@ class ProcessAjaxRequest extends Controller
                 $media = fileSystem::findOrFail($request->post('search'));
                 return view('partials.galleryModel',compact(['media']));
             break;
+            case 'showImageAjax':
+                $media = fileSystem::all();
+                return view('partials.gallery',compact(['media']));
+            break;
             case 'updateImageDetails':
                 $media = fileSystem::findOrFail($request->post('id'));
                 $media->update([

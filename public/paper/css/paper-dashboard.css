@@ -2802,29 +2802,10 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   margin-bottom: 0;
 }
 
-.form-check .form-check-sign::before,
-.form-check .form-check-sign::after {
-  content: " ";
-  display: inline-block;
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  left: 0;
-  cursor: pointer;
-  border-radius: 6px;
-  top: 0;
-  background-color: #AAA7A4;
-  -webkit-transition: opacity 0.3s linear;
-  -moz-transition: opacity 0.3s linear;
-  -o-transition: opacity 0.3s linear;
-  -ms-transition: opacity 0.3s linear;
-  transition: opacity 0.3s linear;
-}
-
 .form-check .form-check-sign::after {
   font-family: 'FontAwesome';
   content: "\f00c";
-  top: -1px;
+  top: 0px;
   text-align: center;
   font-size: 15px;
   opacity: 0;
@@ -2879,17 +2860,14 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   content: "\f10c";
   font-size: 22px;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color: #25c5d9;
   display: inline-block;
   position: absolute;
   opacity: .50;
   left: 5px;
-  top: -5px;
+  top: 0px;
 }
 
-.form-check-label input[type="checkbox"]:checked+.form-check-sign:before {
-  background-color: #66615B;
-}
 
 .form-check-radio input[type="radio"]+.form-check-sign:after,
 .form-check-radio input[type="radio"] {
@@ -2906,11 +2884,12 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 .form-check-radio input[type="radio"]:checked+.form-check-sign::after {
   font-family: 'FontAwesome';
   content: "\f192";
-  top: -5px;
+  top: 0px;
   position: absolute;
   left: 5px;
   opacity: 1;
   font-size: 22px;
+  color: #25c5d9;
 }
 
 .form-check-radio input[type="radio"]:checked+.form-check-sign::after {

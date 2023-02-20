@@ -28,8 +28,20 @@ Route::group(['middleware' => ['auth','verified'], 'prefix'=>'admin'], function 
 
     Route::post('/post_upload', 'App\Http\Controllers\HomeController@post_upload')->name('upload');
 
-	Route::post('gallery/mass-delete','App\Http\Controllers\admin\GalleryController@massDestroy')->name('gallery.massDelete')->can('admin');
-	Route::resource('gallery','App\Http\Controllers\admin\GalleryController');
+    /// codeMirror
+    Route::resource('/custom-code', 'App\Http\Controllers\admin\CodeMirrorController');
+
+    // Gallery route
+    Route::post('gallery/mass-delete','App\Http\Controllers\admin\GalleryController@massDestroy')->name('gallery.massDelete')->can('admin');
+    Route::resource('gallery','App\Http\Controllers\admin\GalleryController')->only([
+        'index','store','destroy'
+    ]);
+
+    /// Static Pages
+	Route::resource('/staticPages', 'App\Http\Controllers\admin\StaticPagesController')->only([
+		'edit','update'
+	]);
+
 
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\admin\ProfileController@edit']);
