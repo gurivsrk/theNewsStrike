@@ -30,6 +30,10 @@ class ProcessAjaxRequest extends Controller
                 ]);
                 return true;
             break;
+            case 'insertImage':
+                $media = fileSystem::findOrFail($request->post('id'));
+                return  $media;
+            break;
         }
 
     }

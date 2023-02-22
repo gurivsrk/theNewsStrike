@@ -37,7 +37,7 @@ class GalleryController extends Controller
 
         try{
             $this->addMedia($request->file('dropZoneImage'),'media');
-            $media = $media->all();
+            $media = $media->get();
             return view('partials.galleryView',compact(['media']));
         }
         catch(Exception $err){

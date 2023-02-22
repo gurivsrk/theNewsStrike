@@ -45,6 +45,8 @@
 </div>
 
 <script>
+
+
     function updateValue($this){
         if($this.value.trim().length > 0){
             ajaxCall(

@@ -470,28 +470,55 @@ custom = {
         )
     }
     else if($this.classList.contains('selectThis')){
-
-        for(let check of document.getElementsByClassName('media-checkbox')){
-            check.checked = false;
-            check.disabled = true;
-        }
-
-        let boxId = $this.getAttribute('for')
-            document.getElementById(boxId).disabled = false;
+        selectSingleImg($this)
     }
   },
 
   insertImage:function(){
-        if(document.querySelector('input[name=mediaCheckbox]:checked')){
-            console.log('yes')
+        if(document.querySelector('input[role=mediaCheckbox]:checked')){
+
+           let id= document.querySelector('input[role=mediaCheckbox]:checked').value
+
+           ajaxCall(
+            'http://127.0.0.1:8001/process/ajax-requests',
+            {id,'dataFor':'insertImage'},
+            (response)=>{
+                console.log(response)
+                $('.onThisImg').attr('src',response.fileUrl)
+                $('<input name="'+$('.onThisImg').data('for')+'" value="'+response.id+'" type="hidden">').insertAfter('.onThisImg')
+                $('#selectMediaModel').hide()
+            },
+            (err)=>{
+                console.error(err.responseJSON.message)
+            }
+        )
         }
         else{
             alert('Please select one image')
         }
-  }
+  },
+    confirmClose:()=>{
+        window.onbeforeunload = () => {
+            return true
+        }
+    }
 
 
 };
+
+$('input').on('keyup',() => custom.confirmClose())
+$('form').on('submit',()=> {window.onbeforeunload = () => {}})
+
+
+function selectSingleImg($this){
+    for(let check of document.getElementsByClassName('media-checkbox')){
+        check.checked = false;
+        check.disabled = true;
+    }
+
+    let boxId = $this.getAttribute('for')
+        document.getElementById(boxId).disabled = false;
+}
 
 // copy to clipboard function
 function copyToClipboard($this){
@@ -508,6 +535,9 @@ function closeModel(parent){
 
 $('.getImageAjax').on('click',function(event){
     event.preventDefault();
+    custom.confirmClose()
+    $('.getImageAjax').removeClass('onThisImg')
+    $(this).addClass('onThisImg')
     ajaxCall(
         'http://127.0.0.1:8001/process/ajax-requests',
         {'dataFor':'showImageAjax'},

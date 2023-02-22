@@ -3,17 +3,14 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('paper') }}/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="{{ asset('paper') }}/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ getImageById(siteInfo('favicon')) }}">
+    <link rel="icon" type="image/png" href="{{ getImageById(siteInfo('favicon')) }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
-    <!-- Extra details for Live View on GitHub Pages -->
-
     <title>
-        {{ __('Paper Dashboard by Creative Tim') }}
+        {{siteinfo('website_title') .' - '. @$class}}
     </title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
-        name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
@@ -21,8 +18,9 @@
     <link href="{{ asset('paper') }}/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{{ asset('paper') }}/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
     <link href="{{ asset('paper') }}/css/custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{asset('paper/css/dropzone.css')}}" type="text/css" />
 
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    {{-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> --}}
     {{-- {{ HTML::style('css/basic.css');}} --}}
     @stack('css')
     <!-- Custom Code Head-->
@@ -34,19 +32,17 @@
 
     @auth()
         @include('layouts.page_templates.auth')
+        <div id="selectMediaModel">
+            <div id="select-Media-Model-body" class="position-relative">
+                <div class="close" onclick="closeModel('selectMediaModel')" >X</div>
+            </div>
+            <div id="showImageAjax"></div>
+        </div>
     @endauth
 
     @guest
         @include('layouts.page_templates.guest')
     @endguest
-
-    <div id="selectMediaModel">
-        <div id="select-Media-Model-body" class="position-relative">
-            <div class="close" onclick="closeModel('selectMediaModel')" >X</div>
-        </div>
-        <div id="showImageAjax"></div>
-    </div>
-
     <!--   Core JS Files   -->
     <script src="{{ asset('paper') }}/js/core/jquery.min.js"></script>
     <script src="{{ asset('paper') }}/js/core/popper.min.js"></script>
@@ -65,7 +61,6 @@
 
     <script src="{{ asset('paper') }}/js/custom.js"></script>
 
-
     {{-- <x-alert type="danger" message="test"/> --}}
 
     <script>
@@ -82,10 +77,18 @@
         success: function (file, response) {
             $('.dz-preview.dz-image-preview').remove();
             $('.dz-message').show();
-            $('#media').hide();
+            $('#media').html(response);
             $('#add-media').text('Add Media')
             $('#uploadMedia').slideUp();
-            $('#ajaxResult').html(response);
+            $('#showImageAjax .showModel').on('click',function(){
+                for(let check of document.getElementsByClassName('media-checkbox')){
+                    check.checked = false;
+                    check.disabled = true;
+                }
+
+                let boxId = $(this).attr('for')
+                document.getElementById(boxId).disabled = false;
+            })
         },
         error: function (file, response) {
             console.log(response)
@@ -119,8 +122,7 @@
                             '{{route("process.ajaxRequest")}}',
                             {'search':$this.value,dataFor},
                             (response)=>{
-                                document.getElementById(hideDiv).style.display = "none"
-                                $('#ajaxResult').show().html(response)
+                                document.getElementById(hideDiv).innerHTML = response
                             },
                             (err)=>{
                                 console.error(err.responseJSON.message)

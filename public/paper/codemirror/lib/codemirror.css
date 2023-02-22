@@ -202,6 +202,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+  display: flex;
 }
 .CodeMirror-wrap .CodeMirror-code pre {
   border-right: none;

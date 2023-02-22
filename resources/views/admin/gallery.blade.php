@@ -1,6 +1,7 @@
 @extends('layouts.app', [
-    'class' => '',
-    'elementActive' => 'gallery'
+    'class' => 'Gallery',
+    'elementHead' => 'gallery',
+    'elementSub' => 'gallery',
 ])
 
 @section('content')
@@ -25,7 +26,7 @@
     @push('scripts')
     <script>
        $('#deletePermanently').on('click',function(){
-        if($('input[name="mediaCheckbox"]:checked').length > 0){
+        if($('input[role="mediaCheckbox"]:checked').length > 0){
             if(prompt('Enter DELETE for bulk deletion') == 'DELETE'){
                 const $this = $(this),
                     inputClass = $this.data('class'),

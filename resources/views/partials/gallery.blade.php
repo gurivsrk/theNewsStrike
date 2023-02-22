@@ -35,8 +35,13 @@
                 <div id="media">
                     @include('partials.galleryView')
                 </div>
-                <div id="ajaxResult"></div>
+                {{-- <div class="media-navigation mt-4 mb-2">
+                    @if(url()->current() == route('gallery.index'))
+                        {{ $media->links() }}
+                    @endif
+                </div> --}}
             </div>
         </div>
     </div>
 </div>
+

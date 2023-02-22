@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'class' => '',
+    'class' => 'Dashboard',
     'elementActive' => 'dashboard'
 ])
 

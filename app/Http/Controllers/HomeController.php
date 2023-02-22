@@ -19,7 +19,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','verified']);
     }
 
     /**
@@ -29,7 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.dashboard');
+        return view('admin.dashboard');
     }
 
     public function post_upload(Request $request){

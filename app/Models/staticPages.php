@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\FileHandler;
 
+use App\Models\fileSystem;
+
 class staticPages extends Model
 {
     use HasFactory, FileHandler;
@@ -16,6 +18,8 @@ class staticPages extends Model
         $data = @self::select('field_value')->where('page',$page)->where('field_name',$field)->first();
         return $data;
     }
+
+
 
     public static function getAllFields($page, $meta_id=null){
         $raw_data = @self::where('page',$page)->get();

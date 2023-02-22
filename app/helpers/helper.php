@@ -1,7 +1,11 @@
 <?php
 
 use App\Models\codeMirror;
-use Carbon\Carbon;
+use App\Models\fileSystem;
+use App\Models\staticPages;
+
+// use Carbon\Carbon;
+// use Throwable;
 
 if(!function_exists('customCode')){
     function customCode($where){
@@ -12,3 +16,24 @@ if(!function_exists('customCode')){
     }
 }
 
+if(!function_exists('getImageById')){
+    function getImageById($id=null){
+        if($id){
+            $media = fileSystem::find($id);
+            if($media){
+                return asset($media->fileUrl);
+            }
+            return asset('paper/img/dummy-image-min.jpg');
+        }
+        else{
+            return asset('paper/img/dummy-image-min.jpg');
+        }
+    }
+}
+
+if(!function_exists('siteInfo')){
+    function siteInfo($key){
+           $value =  staticPages::getField('GD',$key);
+           return $value['field_value'];
+    }
+}

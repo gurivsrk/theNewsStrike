@@ -1,8 +1,8 @@
 
 @extends('layouts.app', [
-    'titlePage' => 'Custom Code',
-    'class' => '',
-    'elementActive' => 'customCode'
+    'class' => 'Custom Code',
+    'elementHead' => 'customization',
+    'elementSub' => 'customCode',
 ])
 @section('content')
 <div class="content">

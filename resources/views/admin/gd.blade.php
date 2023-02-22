@@ -1,9 +1,14 @@
 @extends('layouts.app', [
-    'class' => '',
-    'elementActive' => 'Customization'
+    'class' => 'General Setting',
+    'elementHead' => 'customization',
+    'elementSub' => 'customization',
 ])
 
 @section('content')
+@php
+    $logo = old('logo', @$data->logo);
+    $favicon = old('favicon', @$data->favicon);
+@endphp
 
 <div class="content">
   <div class="container-fluid">
@@ -27,11 +32,11 @@
                             <div class="row justify-space-between" style="padding: 0 90px;">
                                 <div class="col-md-4">
                                       <label class="">{{ __('logo Image') }}</label>
-                                      <img class="getImageAjax" src="{{asset('paper/img/dummy-image-min.jpg')}}">
-                                  </div>
+                                      <x-insert-img for='logo' :src=getImageById($logo) />
+                                </div>
                               <div class="col-md-4">
                                     <label class="">{{ __('Site Logo') }}</label>
-                                    <img class="getImageAjax" src="{{asset('paper/img/dummy-image-min.jpg')}}">
+                                    <x-insert-img for='favicon' :src=getImageById($favicon) />
                                 </div>
                             </div>
                           </div>

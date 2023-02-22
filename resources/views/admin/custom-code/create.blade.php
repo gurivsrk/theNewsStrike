@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'titlePage' => 'Custom Code',
-    'class' => '',
-    'elementActive' => 'customCode'
+    'class' => 'Custom Code',
+    'elementHead' => 'customization',
+    'elementSub' => 'customCode',
 ])
 @section('content')
 @push('css')
@@ -67,11 +67,7 @@
 
                                 <div class="col-md-12 form-group">
                                   <textarea name="code" id="code" rows="1" class="form-control" >
-                                    @if(@$data->linking == "external")
-                                        {{Storage::get($data->code)}}
-                                    @else
-                                        {{old('code',@$data->code)}}
-                                    @endif
+                                    {{@$data->linking == "external" ?(Storage::get($data->code)):old('code',@$data->code)}}
                                 </textarea>
                                   @if ($errors->has('code'))
                                     <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('code') }}</span>
@@ -155,7 +151,6 @@
 @push('scripts')
 
      <script type="text/javascript">
-
             document.getElementById('pageType').addEventListener('change',function(){
                 if(this.value == "html"){
                     document.getElementById('radio-external').setAttribute('disabled',true)
@@ -177,6 +172,9 @@
 
               editor.setCursor({line: 3});
               editor.setSize('100%', '100%');
+              editor.on('change',()=>{
+                custom.confirmClose()
+              })
 
               $('#pageType').on('change', function(){
                   editor.setOption("mode", $(this).val());

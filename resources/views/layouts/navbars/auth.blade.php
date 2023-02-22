@@ -2,55 +2,139 @@
     <div class="logo">
         <a href="#" class="simple-text logo-mini">
             <div class="logo-image-small">
-                <img src="{{ asset('paper') }}/img/logo-small.png">
+                <img src="{{ getImageById(siteInfo('favicon')) }}">
             </div>
         </a>
         <a href="#" class="simple-text logo-normal">
-            {{ __('Creative Tim') }}
+            {{ siteInfo('website_title') }}
         </a>
     </div>
     @can('all')
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="{{ @$elementActive == 'dashboard' ? 'active' : '' }}">
-                <a href="{{ route('page.index', 'dashboard') }}">
+                <a href="{{ route('home') }}">
                     <i class="nc-icon nc-bank"></i>
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
-            @can('admin')
-            <li class="{{ @$elementActive == 'customCode' ? 'active' : '' }}">
-                <a href="{{ route('custom-code.index', 'gd') }}">
-                    <i class="nc-icon nc-html5"></i>
-                    <p>{{ __('Custom Code') }}</p>
-                </a>
-            </li>
-            @endcan
             @can('editor')
-            <li class="{{ @$elementActive == 'gallery' ? 'active' : '' }}">
+            <li class="{{ @$elementHead == 'gallery' ? 'active' : '' }}">
                 <a href="{{ route('gallery.index') }}">
                     <i class="nc-icon nc-image"></i>
                     <p>{{ __('Gallery') }}</p>
                 </a>
             </li>
-            @endcan
-            @can('admin')
-            <li class="{{ @$elementActive == 'Customization' ? 'active' : '' }}">
-                <a href="{{ route('staticPages.edit', 'gd') }}">
-                    <i class="nc-icon nc-settings-gear-65"></i>
-                    <p>{{ __('Customization') }}</p>
+            <li class="{{ @$elementHead == 'menu' ? 'active' : '' }}">
+                <a href="{{ route('gallery.index') }}">
+                    <i class="nc-icon nc-bullet-list-67"></i>
+                    <p>{{ __('Menu') }}</p>
+                </a>
+            </li>
+            <li class="{{ @$elementHead == 'faqs' ? 'active' : '' }}">
+                <a href="{{ route('gallery.index') }}">
+                    <i class="nc-icon nc-bulb-63"></i>
+                    <p>{{ __('FAQs') }}</p>
                 </a>
             </li>
             @endcan
-            <li class="{{ @$elementActive == 'user' || @$elementActive == 'profile' ? 'active' : '' }}">
-                <a data-toggle="collapse" aria-expanded="false" class="collapsed" href="#laravelExamples">
-                    <i class="nc-icon"><img src="{{ asset('paper/img/laravel.svg') }}"></i>
+            @can('admin')
+            <li class="{{ @$elementHead == 'customization'?'active':''}}">
+                <a data-toggle="collapse" aria-expanded="{{ @$elementHead == 'customization' ? 'true' : 'false'}}" class="{{ @$elementHead == 'customization'?'':'collapsed'}} " href="#customization">
+                    <i class="nc-icon nc-settings-gear-65"></i>
                     <p>
-                            {{ __('Laravel examples') }}
+                            {{ __('customization') }}
                         <b class="caret"></b>
                     </p>
                 </a>
-                <div class="collapse" id="laravelExamples">
+                <div class="collapse {{ @$elementHead == 'customization' ? 'show' : ''}}" id="customization">
+                    <ul class="nav">
+                        <li class="{{ @$elementSub == 'customization' ? 'active' : '' }}">
+                            <a href="{{ route('staticPages.edit', 'gd') }}">
+                                <span class="sidebar-mini-icon">{{ __('GS') }}</span>
+                                <span class="sidebar-normal">{{ __('General Setting') }}</span>
+                            </a>
+                        </li>
+                    <li class="{{ @$elementSub == 'customCode' ? 'active' : '' }}">
+                        <a href="{{ route('custom-code.index') }}">
+                            <span class="sidebar-mini-icon">{{ __('CC') }}</span>
+                                <span class="sidebar-normal">{{ __('Custom Code') }}</span>
+                        </a>
+                    </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="{{ @$elementActive == 'user' || @$elementActive == 'profile' ? 'active' : '' }}">
+                <a data-toggle="collapse" aria-expanded="false" class="collapsed" href="#pages">
+                    <i class="nc-icon nc-single-copy-04"></i>
+                    <p>
+                            {{ __('Pages') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="pages">
+                    <ul class="nav">
+                        <li class="{{ @$elementActive == 'profile' ? 'active' : '' }}">
+                            <a href="{{ route('profile.edit') }}">
+                                <span class="sidebar-mini-icon">{{ __('LA') }}</span>
+                                <span class="sidebar-normal">{{ __(' List All') }}</span>
+                            </a>
+                        </li>
+                        {{-- <li class="{{ @$elementActive == 'profile' ? 'active' : '' }}">
+                            <a href="{{ route('profile.edit') }}">
+                                <span class="sidebar-mini-icon">{{ __('UP') }}</span>
+                                <span class="sidebar-normal">{{ __(' User Profile ') }}</span>
+                            </a>
+                        </li>
+                        <li class="{{ @$elementActive == 'user' ? 'active' : '' }}">
+                            <a href="{{ route('page.index', 'user') }}">
+                                <span class="sidebar-mini-icon">{{ __('U') }}</span>
+                                <span class="sidebar-normal">{{ __(' User Management ') }}</span>
+                            </a>
+                        </li> --}}
+                    </ul>
+                </div>
+            </li>
+            <li class="{{ @$elementActive == 'user' || @$elementActive == 'profile' ? 'active' : '' }}">
+                <a data-toggle="collapse" aria-expanded="false" class="collapsed" href="#newsletter">
+                    <i class="nc-icon nc-single-copy-04"></i>
+                    <p>
+                            {{ __('Newsletter') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="newsletter">
+                    <ul class="nav">
+                        <li class="{{ @$elementActive == 'profile' ? 'active' : '' }}">
+                            <a href="{{ route('profile.edit') }}">
+                                <span class="sidebar-mini-icon">{{ __('LA') }}</span>
+                                <span class="sidebar-normal">{{ __(' List All') }}</span>
+                            </a>
+                        </li>
+                        {{-- <li class="{{ @$elementActive == 'profile' ? 'active' : '' }}">
+                            <a href="{{ route('profile.edit') }}">
+                                <span class="sidebar-mini-icon">{{ __('UP') }}</span>
+                                <span class="sidebar-normal">{{ __(' User Profile ') }}</span>
+                            </a>
+                        </li>
+                        <li class="{{ @$elementActive == 'user' ? 'active' : '' }}">
+                            <a href="{{ route('page.index', 'user') }}">
+                                <span class="sidebar-mini-icon">{{ __('U') }}</span>
+                                <span class="sidebar-normal">{{ __(' User Management ') }}</span>
+                            </a>
+                        </li> --}}
+                    </ul>
+                </div>
+            </li>
+            <li class="{{ @$elementActive == 'user' || @$elementActive == 'profile' ? 'active' : '' }}">
+                <a data-toggle="collapse" aria-expanded="false" class="collapsed" href="#userMangement">
+                    <i class="nc-icon nc-circle-10"></i>
+                    <p>
+                            {{ __('User Mangement') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="userMangement">
                     <ul class="nav">
                         <li class="{{ @$elementActive == 'profile' ? 'active' : '' }}">
                             <a href="{{ route('profile.edit') }}">
@@ -67,6 +151,7 @@
                     </ul>
                 </div>
             </li>
+            @endcan
             <li class="{{ @$elementActive == 'icons' ? 'active' : '' }}">
                 <a href="{{ route('page.index', 'icons') }}">
                     <i class="nc-icon nc-diamond"></i>
