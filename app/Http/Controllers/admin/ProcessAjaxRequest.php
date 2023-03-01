@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 use App\Models\fileSystem;
@@ -37,6 +38,15 @@ class ProcessAjaxRequest extends Controller
         }
 
     }
+
+    public function dynaTags(request $request,Category $category){
+        $incomeData = strtolower($request->post('input'));
+        $outgoingData = '';
+        if(strlen($incomeData) > 3){
+            $outgoingData =  $category->select('id','name')->where('name','like', "$incomeData%")->where('type','tag')->where('for','other')->get();
+        }
+        return $outgoingData ;
+  }
 
     protected function getResult($tableObj, $search, $column1,$column2)
     {

@@ -1,12 +1,12 @@
 <div class="sidebar" data-color="black" data-active-color="primary">
     <div class="logo">
-        <a href="#" class="simple-text logo-mini">
+        <a href="/" class="simple-text logo-normal">
             <div class="logo-image-small">
                 <img src="{{ getImageById(siteInfo('favicon')) }}">
             </div>
-        </a>
-        <a href="#" class="simple-text logo-normal">
-            {{ siteInfo('website_title') }}
+            <p>
+                {{ siteInfo('website_title') }}
+            </p>
         </a>
     </div>
     @can('all')
@@ -16,6 +16,12 @@
                 <a href="{{ route('home') }}">
                     <i class="nc-icon nc-bank"></i>
                     <p>{{ __('Dashboard') }}</p>
+                </a>
+            </li>
+            <li class="{{ @$elementHead == 'posts' ? 'active' : '' }}">
+                <a href="{{ route('blog.index') }}">
+                    <i class="nc-icon nc-book-bookmark"></i>
+                    <p>{{ __('Posts') }}</p>
                 </a>
             </li>
             @can('editor')
@@ -97,7 +103,7 @@
             </li>
             <li class="{{ @$elementActive == 'user' || @$elementActive == 'profile' ? 'active' : '' }}">
                 <a data-toggle="collapse" aria-expanded="false" class="collapsed" href="#newsletter">
-                    <i class="nc-icon nc-single-copy-04"></i>
+                    <i class="nc-icon nc-send"></i>
                     <p>
                             {{ __('Newsletter') }}
                         <b class="caret"></b>
@@ -152,6 +158,12 @@
                 </div>
             </li>
             @endcan
+            <li class="{{ @$elementActive == 'icons' ? 'active' : '' }}">
+                <a href="{{ route('page.index', 'icons') }}">
+                    <i class="nc-icon nc-check-2"></i>
+                    <p>{{ __('Categorys & Tags') }}</p>
+                </a>
+            </li>
             <li class="{{ @$elementActive == 'icons' ? 'active' : '' }}">
                 <a href="{{ route('page.index', 'icons') }}">
                     <i class="nc-icon nc-diamond"></i>

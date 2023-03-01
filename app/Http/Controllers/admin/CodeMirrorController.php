@@ -33,7 +33,7 @@ class CodeMirrorController extends Controller
      */
     public function index()
     {
-        $pages = codeMirror::all();
+        $pages = codeMirror::paginate(15);
         return view('admin.custom-code.index',compact('pages'));
     }
 

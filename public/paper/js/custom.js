@@ -506,30 +506,76 @@ custom = {
 
 };
 
-$('input').on('keyup',() => custom.confirmClose())
-$('form').on('submit',()=> {window.onbeforeunload = () => {}})
+  /// initialize Data table
+  var table = $('.table-sort').DataTable({
+    stateSave: true,
+    dom: 'Bfrtip',
+     paging: false,
+    select: true,
+    searching: false,
+    info: false,
+    buttons: [
+        {
+            text: 'Select all',
+            action: function () {
+                table.rows().select();
+            }
+        },
+        {
+            text: 'Select none',
+            action: function () {
+                table.rows().deselect();
+            }
+        },
+        {
+            text: 'Delete selected',
+            action: () => {
+                deleteSelected()
+            }
+        }
+    ]
+})
 
+/// initialize select2
+$('.vsrk-select').select2({
+    placeholder: 'Select an option',
+    tags: true
+})
 
-function selectSingleImg($this){
-    for(let check of document.getElementsByClassName('media-checkbox')){
-        check.checked = false;
-        check.disabled = true;
+$('input').on('keyup',function() {
+    if($(this).val().length > 0){
+        custom.confirmClose();
     }
-
-    let boxId = $this.getAttribute('for')
-        document.getElementById(boxId).disabled = false;
 }
+)
+$('form').on('submit',(event) => { window.onbeforeunload = () => {} })
 
-// copy to clipboard function
-function copyToClipboard($this){
-   navigator.clipboard.writeText($this.value);
-   custom.showNotification('top','right', 'copy to clipboard','success')
-}
+$('.ajax-form').on('submit',function(event){
+    event.preventDefault()
+    const action = $(this).attr('action'),
+    data = convertToObject($(this).serializeArray());
+    ajaxCall(
+        action,
+        {...data},
+        (response)=>{
+            console.log(response)
+            custom.showNotification('top','right', response ,'success')
+        },
+        (err)=>{
+            console.error(err.responseText)
+          custom.showNotification('top','right', err.responseJSON.message ,'danger')
+        }
+    )
+})
 
-//close function
-function closeModel(parent){
-    document.getElementById(parent).style.display = "none"
-}
+/// prevent form submission on enter
+$(document).on("keydown", ":input:not(textarea)", function(event) {
+    if (event.key == "Enter") {
+        event.preventDefault();
+        return false
+    }
+});
+
 
 // show Model
 
@@ -552,7 +598,57 @@ $('.getImageAjax').on('click',function(event){
             console.error(err.responseJSON.message)
         }
     )
-
-
 });
 
+// Convert to object
+function convertToObject(data){
+    let inpArray = []
+    data.map((input)=>{
+        inpArray[input.name] = input.value
+    })
+    return Object.assign({},inpArray)
+}
+// select single image in inner pages
+function selectSingleImg($this){
+    for(let check of document.getElementsByClassName('media-checkbox')){
+        check.checked = false;
+        check.disabled = true;
+    }
+
+    let boxId = $this.getAttribute('for')
+        document.getElementById(boxId).disabled = false;
+}
+
+// copy to clipboard function
+function copyToClipboard($this){
+   navigator.clipboard.writeText($this.value);
+   custom.showNotification('top','right', 'copy to clipboard','success')
+}
+
+//close function
+function closeModel(parent){
+    document.getElementById(parent).style.display = "none"
+}
+
+/// CK EDITOR 5
+async function CKEditor () {
+    try{
+        let setTextValue = () => document.getElementById('editorData').innerHTML = editor.getData()
+        let editor = await BalloonBlockEditor.create( document.getElementById( 'editor' ))
+        window.editor = editor;
+            editor.ui.focusTracker.on('change:isFocused',(evt, data, isFocused)=>{
+                if(!isFocused){
+                    setTextValue()
+                    //console.log(editor.getData())
+                }
+                window.onbeforeunload = () => {
+                    return true
+                }
+            })
+            setTextValue()
+    }
+    catch(error){
+        console.warn( 'Build id: sd1em89awhw-my0vte1qqmm6' );
+        console.error( error );
+    }
+}

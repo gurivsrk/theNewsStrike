@@ -22,12 +22,12 @@
             <div class="table-responsive">
               <table class="table table-sort">
                 <thead class="text-primary">
-                  <th style="width:40px"> Sno.</th>
+                  <th> Sno.</th>
                   <th> Page Name</th>
                   <th> Type</th>
                   <th> location</th>
                   {{--<th> link (if any) </th>--}}
-                  <th class="text-center" style="width:40px"> Actions </th>
+                  <th class="text-center"> Actions </th>
                 </thead>
                 <tbody>
                  @if(!empty($pages))

@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'class' => 'Custom Code',
+    'class' => 'Create Custom Code',
     'elementHead' => 'customization',
     'elementSub' => 'customCode',
 ])
@@ -45,7 +45,7 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="col-md-12 form-group">
-                                     <h3 class="mb-2">{{ __('Page Name') }}</h3>
+                                     <h6 class="mb-2">{{ __('Page Name') }}</h6>
                                     <input type="text" name="page_name" placeholder="Name" value="{{old('page_name',@$data->page_name)}}" class="form-control" required="" aria-required="true" >
                                     @if ($errors->has('page_name'))
                                         <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('page_name') }}</span>
@@ -53,7 +53,7 @@
                                 </div>
 
                                 <div class="col-md-12 form-group">
-                                     <h3 class="mb-2">{{ __('Page Type') }}</h3>
+                                     <h6 class="mb-2">{{ __('Page Type') }}</h6>
                                     <select id="pageType" class="form-control custom-select" name="type" required="" aria-required="true" >
                                         <option hidden="" value="" >Please Select Page Type</option>
                                         <option value="javascript" {{@$data->type == "javascript" ?'selected':'' }}>JS</option>

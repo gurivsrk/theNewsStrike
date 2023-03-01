@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('auth');
 
 Route::post('/process/ajax-requests',[App\Http\Controllers\admin\ProcessAjaxRequest::class,'ajaxRequest'])->name('process.ajaxRequest');
 
@@ -24,9 +24,16 @@ Auth::routes(['verify'=>true]);
 
 Route::group(['middleware' => ['auth','verified'], 'prefix'=>'admin'], function () {
 
+
     Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
     Route::post('/post_upload', 'App\Http\Controllers\HomeController@post_upload')->name('upload');
+    ///General
+    Route::post('/dyna-tags', 'App\Http\Controllers\admin\ProcessAjaxRequest@dynaTags')->name('getDynaTags');
+
+    /// Blog
+    Route::resource('/blog','App\Http\Controllers\admin\BlogController');
+
 
     /// codeMirror
     Route::resource('/custom-code', 'App\Http\Controllers\admin\CodeMirrorController');
