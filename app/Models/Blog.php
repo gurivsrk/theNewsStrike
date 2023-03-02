@@ -71,7 +71,4 @@ class Blog extends Model
         return $this->belongsTo(User::class,'author','id');
     }
 
-    public function tags(){
-        return $this->hasMany(tags::class,'blog_id','tag_id');
-    }
 }

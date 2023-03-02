@@ -7,9 +7,13 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 
 use App\Models\fileSystem;
+use App\Traits\FileHandler;
 
 class ProcessAjaxRequest extends Controller
 {
+
+    use FileHandler;
+
     public function ajaxRequest(Request $request){
         switch($request->post('dataFor')){
             case 'gallery':
@@ -43,10 +47,17 @@ class ProcessAjaxRequest extends Controller
         $incomeData = strtolower($request->post('input'));
         $outgoingData = '';
         if(strlen($incomeData) > 3){
-            $outgoingData =  $category->select('id','name')->where('name','like', "$incomeData%")->where('type','tag')->where('for','other')->get();
+            $outgoingData =  $category->select('id','name')->where('name','like', "$incomeData%")->where('type','tag')->get();
         }
         return $outgoingData ;
-  }
+    }
+
+    public function uploadCkImage(Request $request){
+        if ($request->hasFile('upload')) {
+            $url = $this->addMedia($request->file('upload'),'ckeditor');
+            return response()->json(["url"=> $url]);
+        }
+    }
 
     protected function getResult($tableObj, $search, $column1,$column2)
     {

@@ -9,7 +9,7 @@ trait FileHandler{
 
     public function addMedia($file,$loc,$isName=false){
         $img_name = $file->getClientOriginalName();
-        $filename = ($isName == false) ? date('his') . '-' . $img_name : $img_name ;
+        $filename = ($isName == false) ? date('his') . '-' . strtolower(str_replace(' ','-',$img_name)) : strtolower(str_replace(' ','-',$img_name)) ;
         $img_name = $file->storePubliclyAs($loc, $filename,'public');
         $url = '/storage/'.$img_name;
         fileSystem::create([

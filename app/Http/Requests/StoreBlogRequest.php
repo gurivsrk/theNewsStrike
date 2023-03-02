@@ -25,6 +25,7 @@ class StoreBlogRequest extends FormRequest
     {
         return [
             'title'=>'required|unique:blogs',
+            //'title'=>'required',
             'category'=>'required',
             'content'=>'required',
             'blog_image'=>'required',

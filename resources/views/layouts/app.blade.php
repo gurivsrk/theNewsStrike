@@ -163,6 +163,46 @@
                     }
                 })
         }
+
+
+        /// CK EDITOR 5
+
+            async function CKEditor () {
+                try{
+                    let setTextValue = () => document.getElementById('editorData').innerHTML = editor.getData()
+                    let editor = await BalloonBlockEditor.create( document.getElementById( 'editor' ),{
+                        simpleUpload: {
+                            // The URL that the images are uploaded to.
+                            uploadUrl:"{{route('uploadImg')}}",
+
+                            // Enable the XMLHttpRequest.withCredentials property.
+                            // withCredentials: true,
+
+                            // Headers sent along with the XMLHttpRequest to the upload server.
+                            headers: {
+                                'X-CSRF-TOKEN': '{{csrf_token()}}',
+                            }
+                        }
+                    })
+
+                            window.editor = editor;
+                        editor.ui.focusTracker.on('change:isFocused',(evt, data, isFocused)=>{
+                            if(!isFocused){
+                                setTextValue()
+                                //console.log(editor.getData())
+                            }
+                            window.onbeforeunload = () => {
+                                return true
+                            }
+                        })
+                        setTextValue()
+                }
+                catch(error){
+                    console.warn( 'Build id: sd1em89awhw-my0vte1qqmm6' );
+                    console.error( error );
+                }
+            }
+
     </script>
 
 

@@ -30,19 +30,19 @@
               <div id="GD-section">
                   <div class="row">
                     <div class="col-md-12">
-                      <form  method="post" action="{{@$data->id ? route('blog.update',[$data->id]):route('blog.store')}}" enctype="multipart/form-data">
+                      <form class="ajax-form"  method="post" action="{{@$blog->id ? route('blog.update',[@$blog->id]):route('blog.store')}}" enctype="multipart/form-data">
                         @csrf
-                        @if(@$data->id)
+                        @if(@$blog->id)
                             @method('put')
                         @endif
                         <div class="my-3">
-                            <x-input id="slug"  title="Slug" placeholder="{{url('/')}}/new-post-title" name="slug" type='text' :value="old('slug',url('/').'/'.@$data->slug)" :readOnly=true />
+                            <x-input id="slug"  title="Slug" placeholder="{{url('/')}}/new-post-title" name="slug" type='text' :value="old('slug',url('/').'/'.@$blog->slug)" :readOnly="@$blog->id?'':true" />
                         </div>
                         <div class="row">
 
                             <div class="col-md-8">
 
-                                <x-input id="postTitle" title="Title" placeholder="Name" name="title" type='text' :value="old('title',@$data->title)" required="true"/>
+                                <x-input id="postTitle" title="Title" placeholder="Name" name="title" type='text' :value="old('title',@$blog->title)" required="true"/>
 
                                 <div class="col-md-12 form-group">
                                      <h6 class="mb-2">{{ __('Category') }} <sup class='text-danger'>*</sup></h6>
@@ -50,7 +50,7 @@
                                         <option hidden="" value="" >Please Select Page Type</option>
                                         @if(!empty($categories))
                                             @foreach ($categories as $category)
-                                                <option value="{{$category->id}}" {{@$data->type == $category->id ?'selected':'' }}>{{$category->name}}</option>
+                                                <option value="{{$category->id}}" {{@$blog->category == $category->id ?'selected':'' }}>{{$category->name}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -62,7 +62,7 @@
                                 <div class="col-md-12 form-group">
                                     <h6 class="mb-2">{{ __('Content') }} <sup class='text-danger'>*</sup></h6>
                                   <div id="editor" class="editor" rows="1">
-                                    {{old('content',@$data->content)}}
+                                    {!! old('content',@$blog->content) !!}
                                   </div>
                                   <textarea id="editorData" class="d-none" name="content"></textarea>
                                   @if ($errors->has('code'))
@@ -76,14 +76,14 @@
                                     <h5 class="card-title mb-2" style="background: #25c5d9;">Other Options:</h5>
                                     <div class="col-md-12 mb-3">
                                         <h6 class="mb-2">{{ __('Featured Image') }} <sup class='text-danger'>*</sup></h6>
-                                        <x-insert-img for='blog_image' :src="old('blog_image',getImageById(@$data->blog_image))" />
+                                        <x-insert-img for='blog_image' :src="old('blog_image',getImageById(@$blog->blog_image))" />
                                         @if ($errors->has('blog_image'))
                                             <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('blog_image') }}</span>
                                         @endif
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <h6 class="mb-2">{{ __('Tags') }}</h6>
-                                        <x-tag-input :allTags="@$catetag" :tags="@$blogs->tags"/>
+                                        <x-tag-input :tags="getTags(@$blog->id)"/>
                                         @if ($errors->has('tags'))
                                             <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('tags') }}</span>
                                         @endif
@@ -93,7 +93,7 @@
                                         <select id="author" class="form-control custom-select vsrk-select" name="author" required="" aria-required="true" >
                                             <option hidden="" value="" >Please Select Author</option>
                                                 @foreach ($authors as $author)
-                                                    <option value="{{$author->id}}" {{auth()->id() == $author->id ?'selected':'' }}>{{$author->name}}</option>
+                                                    <option value="{{$author->id}}" {{@$blog->id?($blog->author == $author->id ? 'selected': ''):(auth()->id() == $author->id ?'selected':'') }}>{{$author->name}}</option>
                                                 @endforeach
 
                                         </select>
@@ -103,7 +103,7 @@
                                         <div class="col-md-12 form-group">
                                             <div class="form-check form-check-radio col-md-6">
                                                 <label class="form-check-label text-dark">
-                                                    <input class="form-check-input"  data-attr="image-parent" type="radio" name="status" id="radio-external" value="1" {{@$data->status ?'checked':'' }}>
+                                                    <input class="form-check-input"  data-attr="image-parent" type="radio" name="status" id="radio-external" value="1" {{@$blog->status ?'checked':'' }}>
                                                     Published
                                                     <span class="form-check-sign"></span>
                                                 </label>
@@ -111,7 +111,7 @@
                                             </div>
                                             <div class="form-check form-check-radio col-md-6">
                                                 <label class="form-check-label text-dark">
-                                                    <input class="form-check-input" data-attr="image-parent" type="radio" name="status" id="radio-internal" value="0"  {{@$data->status ?'checked':'' }}>
+                                                    <input class="form-check-input" data-attr="image-parent" type="radio" name="status" id="radio-internal" value="0"  {{@$blog->id ? (@$blog->status ?'':'checked'):'' }}>
                                                     Unpublished
                                                     <span class="form-check-sign"></span>
                                                 </label>

@@ -3,6 +3,7 @@
 use App\Models\codeMirror;
 use App\Models\fileSystem;
 use App\Models\staticPages;
+use App\Models\tags;
 
 // use Carbon\Carbon;
 // use Throwable;
@@ -35,5 +36,15 @@ if(!function_exists('siteInfo')){
     function siteInfo($key){
            $value =  staticPages::getField('GD',$key);
            return $value['field_value'];
+    }
+}
+
+if(!function_exists('getTags')){
+    function getTags($blogId){
+        $query = tags::select('tag_id')->where('blog_id',$blogId)->get();
+            foreach($query as $single){
+                $tags[] = $single->tagName->name;
+            }
+        return $tags??[];
     }
 }

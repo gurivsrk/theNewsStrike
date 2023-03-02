@@ -27,9 +27,9 @@ Route::group(['middleware' => ['auth','verified'], 'prefix'=>'admin'], function 
 
     Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
-    Route::post('/post_upload', 'App\Http\Controllers\HomeController@post_upload')->name('upload');
     ///General
     Route::post('/dyna-tags', 'App\Http\Controllers\admin\ProcessAjaxRequest@dynaTags')->name('getDynaTags');
+    Route::post('/uploadImg', 'App\Http\Controllers\admin\ProcessAjaxRequest@uploadCkImage')->name('uploadImg');
 
     /// Blog
     Route::resource('/blog','App\Http\Controllers\admin\BlogController');

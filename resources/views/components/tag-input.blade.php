@@ -44,15 +44,9 @@
 <section class="dyna-section position-relative">
     <div id="dyna-select">
         <span id="dyna-list" class="{{!empty($tags) && is_array($tags)?'hasList':''}}">
-            @if(is_array($allTags))
-                @foreach($allTags as $tag)
-                    @if($tag->type == "tag")
-                    @if(!empty($tags) && is_array($tags))
-                            @if(in_array($tag->id,$tags))
-                                <span class="dyna-list" id="{{$tag->id}}"><span class="close-span">X</span><span class="dyna-text">{{$tag->name}}</span></span>
-                            @endif
-                        @endif
-                    @endif
+            @if(!empty($tags))
+                @foreach ($tags as $tag)
+                <span class="dyna-list" id="{{$tag}}"><span class="close-span">X</span><span class="dyna-text">{{$tag}}</span></span>
                 @endforeach
             @endif
         </span>
@@ -152,6 +146,7 @@ $('.dyna-input').keyup(function(e){
         data:{input:data},
         beforeSend:()=>{},
         success: (result)=>{
+            //console.log(result)
             let liArray = [];
             if(Array.isArray(result)) result.forEach((tags) => liArray.push(`<li data-id="${tags.id}">${tags.name}</li>`))
             $('#dyna-ajax-val').perfectScrollbar().html(liArray).show()

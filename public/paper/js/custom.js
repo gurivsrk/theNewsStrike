@@ -483,7 +483,7 @@ custom = {
             'http://127.0.0.1:8001/process/ajax-requests',
             {id,'dataFor':'insertImage'},
             (response)=>{
-                console.log(response)
+                //console.log(response)
                 $('.onThisImg').attr('src',response.fileUrl)
                 $('<input name="'+$('.onThisImg').data('for')+'" value="'+response.id+'" type="hidden">').insertAfter('.onThisImg')
                 $('#selectMediaModel').hide()
@@ -552,18 +552,24 @@ $('form').on('submit',(event) => { window.onbeforeunload = () => {} })
 
 $('.ajax-form').on('submit',function(event){
     event.preventDefault()
-    const action = $(this).attr('action'),
-    data = convertToObject($(this).serializeArray());
+    const $this = $(this),
+    action = $this.attr('action'),
+    data = convertToObject($this.serializeArray());
     ajaxCall(
         action,
         {...data},
         (response)=>{
             console.log(response)
             custom.showNotification('top','right', response ,'success')
+            $this.find('input[name=submit]').val(response).attr('disabled','disabled')
+            window.onbeforeunload = false
         },
         (err)=>{
             console.error(err.responseText)
           custom.showNotification('top','right', err.responseJSON.message ,'danger')
+        },
+        ()=>{
+            $this.find('input[name=submit]').val('submitting...')
         }
     )
 })
@@ -628,27 +634,4 @@ function copyToClipboard($this){
 //close function
 function closeModel(parent){
     document.getElementById(parent).style.display = "none"
-}
-
-/// CK EDITOR 5
-async function CKEditor () {
-    try{
-        let setTextValue = () => document.getElementById('editorData').innerHTML = editor.getData()
-        let editor = await BalloonBlockEditor.create( document.getElementById( 'editor' ))
-        window.editor = editor;
-            editor.ui.focusTracker.on('change:isFocused',(evt, data, isFocused)=>{
-                if(!isFocused){
-                    setTextValue()
-                    //console.log(editor.getData())
-                }
-                window.onbeforeunload = () => {
-                    return true
-                }
-            })
-            setTextValue()
-    }
-    catch(error){
-        console.warn( 'Build id: sd1em89awhw-my0vte1qqmm6' );
-        console.error( error );
-    }
 }

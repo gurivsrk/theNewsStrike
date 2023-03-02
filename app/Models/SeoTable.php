@@ -8,8 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class SeoTable extends Model
 {
     use HasFactory;
-    protected $table = "seos";
+    protected $table = "seo";
 
-    protected $gaurded = ['id'];
+    protected $fillable = [
+        'meta_title',
+        'meta_keywords',
+        'meta_descritpions',
+        'misc',
+        'page_id'
+    ];
+
 
 }

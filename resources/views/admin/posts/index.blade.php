@@ -16,19 +16,19 @@
           </div>
           <div class="card-body">
           <div class="col-12 text-right">
-                  <a href="{{route('blog.create')}}" class="btn btn-sm btn-info" target="_blank" data-id="single">Add New Blog</a>
+                  <a href="{{route('blog.create')}}" class="btn btn-sm btn-info" data-id="single">Add New Blog</a>
                   {{-- <a href="javascript:void(0)" class="btn btn-sm btn-warning" data-id="bulk">Add new schemes { Bulk } </a> --}}
                 </div>
             <div class="table-responsive">
               <table class="table table-sort">
-                <thead class="text-primary">
-                  <th style="width:40px"> Sno.</th>
-                  <th> Title</th>
-                  <th style="width:100px"> Category</th>
-                  <th> Tags</th>
-                  <th> Date</th>
-                  <th style="width:40px"> Views</th>
-                  <th style="width:40px"> </th>
+                <thead class="card-title">
+                  <th class="pr-3 text-light" style="width:40px"> Sno.</th>
+                  <th class="pr-3 text-light" style="width:200px"> Title</th>
+                  <th class="pr-3 text-light" style="width:100px"> Category</th>
+                  <th class="pr-3 text-light"> Tags</th>
+                  <th class="pr-3 text-light"> Date</th>
+                  <th class="pr-3 text-light" style="width:40px"> Views</th>
+                  <th class="pr-3 text-light" style="width:40px"> </th>
                 </thead>
                 <tbody>
                  @if(!empty($blogs))
@@ -37,10 +37,17 @@
                       <td>{{++$key}}</td>
                       <td> <a rel="tooltip" class="btn-link" href="{{route('blog.edit',@$blog->id)}}">{{@$blog->title}}</</td>
                       <td> {{@$blog->categoryName->name}}</td>
-                      <td> [] </td>
+                      <td class="flex-with-wrap">
+                        @if(getTags($blog->id))
+                            @foreach (getTags($blog->id) as $tag)
+                                <span class="tags">{{$tag}}</span>
+                            @endforeach
+                        @else
+                        -
+                        @endif
+                    </td>
                       <td>{{@$blog->created_at}} </td>
                       <td> {{@$blog->views}} </td>
-                     {{-- <td> {{ !empty($form->form_link) ? $form->form_link : '-' }} </td> --}}
                       <td class="td-actions text-center">
                           <form action="{{route('blog.destroy',$blog->id)}}" method="POST" onsubmit="return confirm('Are you sure ?');" style="display: inline-block;">
                               @method('delete')

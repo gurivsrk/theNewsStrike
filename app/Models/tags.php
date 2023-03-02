@@ -14,7 +14,7 @@ class tags extends Model
     protected $fillable = ['tag_id','blog_id'];
 
     public function tagName(){
-        return $this->belongsTo(Category::class,'id','tag_id');
+        return $this->belongsTo(Category::class,'tag_id','id');
     }
 
 }

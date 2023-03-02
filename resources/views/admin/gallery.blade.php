@@ -43,8 +43,7 @@
                 '{{route("gallery.massDelete")}}',
                 {ids},
                 (response)=>{
-                    $('#media').hide();
-                    $('#ajaxResult').html(response);
+                    $('#media').html(response);
                     custom.showNotification('top','right','Deleted Successfully','success')
                 },(err)=>{
                     custom.showNotification('top','right',err.responseJSON.message+'! Only admin can perfom this action','danger')

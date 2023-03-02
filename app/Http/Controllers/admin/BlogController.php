@@ -16,6 +16,17 @@ use App\Models\SeoTable;
 
 class BlogController extends Controller
 {
+
+    private function tags($tags, $blogId){
+        $tags = Category::addNewTags($tags);
+        foreach($tags as $tag){
+            tags::create([
+                'tag_id' => $tag,
+                'blog_id' => $blogId
+            ]);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,9 +38,9 @@ class BlogController extends Controller
         $this->middleware(['auth','verified']);
     }
 
-    public function index()
+    public function index(Blog $blog)
     {
-        $blogs = Blog::paginate(20);
+        $blogs = $blog->paginate(20);
         return view('admin.posts.index',compact(['blogs']));
     }
 
@@ -54,30 +65,20 @@ class BlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
-        $tags = Category::addNewTags($request->tags);
         $data = $request->all();
         $data['category'] = Category::addNewCategory($request->category);
         $post = Blog::create($data);
-        $postId =  $post['id'];
-        foreach($tags as $tag){
-            $post->tags()->create([
-                'tag_id' => $tag,
-                'blog_id' => $postId
-            ]);
-        }
-        return $tags;
-        // echo 'yes';
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Blog $blog)
-    {
-        //
+        $this->tags($request->tags, $post['id']);
+
+        SeoTable::create([
+            'page_id'=>$post['id'],
+            'meta_title'=>$request->meta_title??$post->title,
+            'meta_keywords' => $request->meta_keywords??null,
+            'meta_descritpions' => $request->meta_descritpions??null,
+
+        ]);
+        return 'Post Created Successfully';
     }
 
     /**
@@ -88,7 +89,10 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        //
+        $authors = User::select('name','id')->get();
+        $categories = Category::select('name','id')->where('type','category')->get();
+        $data = SeoTable::select('meta_title','meta_keywords','meta_descritpions','misc')->where('page_id',$blog->id)->first();
+        return view('admin.posts.create',compact(['authors','categories','blog','data']));
     }
 
     /**
@@ -100,7 +104,21 @@ class BlogController extends Controller
      */
     public function update(UpdateBlogRequest $request, Blog $blog)
     {
-        //
+        tags::where('blog_id',$blog->id)->delete();
+
+        SeoTable::where('page_id',$blog->id)->update([
+            'meta_title'=>$request->meta_title,
+            'meta_keywords' => $request->meta_keywords,
+            'meta_descritpions' => $request->meta_descritpions,
+        ]);
+
+        $this->tags($request->tags, $blog->id);
+
+        $request = $request->all();
+
+        $blog->update($request);
+
+        return 'Updated Successfully';
     }
 
     /**
@@ -111,6 +129,7 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
+        $blog->delete();
+        return redirect()->back()->with('Deleted Successfully');
     }
 }
