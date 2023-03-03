@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth','verified'], 'prefix'=>'admin'], function 
     ///General
     Route::post('/dyna-tags', 'App\Http\Controllers\admin\ProcessAjaxRequest@dynaTags')->name('getDynaTags');
     Route::post('/uploadImg', 'App\Http\Controllers\admin\ProcessAjaxRequest@uploadCkImage')->name('uploadImg');
+    Route::post('/change-status', 'App\Http\Controllers\admin\ProcessAjaxRequest@changeStatus')->name('changeStatus');
 
     /// Blog
     Route::resource('/blog','App\Http\Controllers\admin\BlogController');

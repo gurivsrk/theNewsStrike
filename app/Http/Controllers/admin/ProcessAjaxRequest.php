@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,7 @@ class ProcessAjaxRequest extends Controller
                 return view('partials.gallery',compact(['media']));
             break;
             case 'updateImageDetails':
+                $this->middleware('auth');
                 $media = fileSystem::findOrFail($request->post('id'));
                 $media->update([
                     $request->post('type') => $request->post('data')
@@ -36,6 +38,7 @@ class ProcessAjaxRequest extends Controller
                 return true;
             break;
             case 'insertImage':
+                $this->middleware('auth');
                 $media = fileSystem::findOrFail($request->post('id'));
                 return  $media;
             break;
@@ -44,6 +47,7 @@ class ProcessAjaxRequest extends Controller
     }
 
     public function dynaTags(request $request,Category $category){
+        $this->middleware('auth');
         $incomeData = strtolower($request->post('input'));
         $outgoingData = '';
         if(strlen($incomeData) > 3){
@@ -53,12 +57,28 @@ class ProcessAjaxRequest extends Controller
     }
 
     public function uploadCkImage(Request $request){
+        $this->middleware('auth');
         if ($request->hasFile('upload')) {
             $url = $this->addMedia($request->file('upload'),'ckeditor');
             return response()->json(["url"=> $url]);
         }
     }
 
+    public function changeStatus(Request $request){
+        $this->middleware('auth');
+
+        $status = $request->status ? '' : true;
+        $msg = $request->status ? 'Unpublished successfully' : $request->type.' is visible now!';
+        if($request->type == "Post"){
+            Blog::where('id',$request->id)->update([
+                'status' => $status
+            ]);
+        }
+
+        // echo ($request->id . $request->type . $request->status);
+        return $msg;
+
+    }
     protected function getResult($tableObj, $search, $column1,$column2)
     {
         return $tableObj->where($column1,'LIKE','%'.$search.'%')

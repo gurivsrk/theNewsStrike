@@ -20,8 +20,10 @@
                             <div class="button-section">
                                 <button id="add-media" class="btn btn-primary my-0 ml-2" style="padding:7px 15px " onclick="custom.toggleBtn(this)" data-id="uploadMedia">Add Media</button>
                                 @if(url()->current() == route('gallery.index'))
-                                    <button id="deletePermanently" class="btn btn-outline-primary my-0 d-none" onclick="custom.deleteBulk" data-class="media-checkbox">Delete Permanently</button>
-                                    <button class="btn btn-outline-primary my-0" onclick="custom.bulkSelect(this)" data-class="media-checkbox">Bulk Select</button>
+                                    @can('admin')
+                                        <button id="deletePermanently" class="btn btn-outline-primary my-0 d-none" onclick="custom.deleteBulk" data-class="media-checkbox">Delete Permanently</button>
+                                        <button class="btn btn-outline-primary my-0" onclick="custom.bulkSelect(this)" data-class="media-checkbox">Bulk Select</button>
+                                    @endcan
                                 @else
                                 <button class="btn btn-outline-primary my-0" onclick="custom.insertImage(this)" data-class="media-checkbox">Insert Image</button>
                                 @endif

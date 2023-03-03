@@ -457,7 +457,7 @@ custom = {
     let id= $this.getAttribute('for');
     if($this.classList.contains('showModel')){
         ajaxCall(
-            'http://127.0.0.1:8001/process/ajax-requests',
+            `${window.location.origin}/process/ajax-requests`,
             {'search':id,'dataFor':'showModel'},
             (response)=>{
                 //console.log(response)
@@ -480,7 +480,7 @@ custom = {
            let id= document.querySelector('input[role=mediaCheckbox]:checked').value
 
            ajaxCall(
-            'http://127.0.0.1:8001/process/ajax-requests',
+            `${window.location.origin}/process/ajax-requests`,
             {id,'dataFor':'insertImage'},
             (response)=>{
                 //console.log(response)
@@ -510,30 +510,14 @@ custom = {
   var table = $('.table-sort').DataTable({
     stateSave: true,
     dom: 'Bfrtip',
-     paging: false,
+    paging: false,
     select: true,
     searching: false,
     info: false,
     buttons: [
-        {
-            text: 'Select all',
-            action: function () {
-                table.rows().select();
-            }
-        },
-        {
-            text: 'Select none',
-            action: function () {
-                table.rows().deselect();
-            }
-        },
-        {
-            text: 'Delete selected',
-            action: () => {
-                deleteSelected()
-            }
-        }
-    ]
+        'excel',
+        'print',
+    ],
 })
 
 /// initialize select2
@@ -574,6 +558,32 @@ $('.ajax-form').on('submit',function(event){
     )
 })
 
+$('.status-switch').on('change',function(){
+    window.onbeforeunload = false
+    if(confirm('sure to change status')){
+        const $this = $(this);
+        let status = $this.data('status'),
+        id = $this.data('id'),
+        type = $this.data('type');
+
+        ajaxCall(
+           `${window.location.origin}/admin/change-status`,
+            {id,type,status},
+            (response)=>{
+                custom.showNotification('top','right', response,'success')
+                setTimeout(()=>{
+                    window.location.reload()
+                },2000)
+                console.log(response)
+            },
+            (err)=>{
+                console.error(err.responseJSON.message)
+            }
+        )
+
+    }
+})
+
 /// prevent form submission on enter
 $(document).on("keydown", ":input:not(textarea)", function(event) {
     if (event.key == "Enter") {
@@ -591,7 +601,7 @@ $('.getImageAjax').on('click',function(event){
     $('.getImageAjax').removeClass('onThisImg')
     $(this).addClass('onThisImg')
     ajaxCall(
-        'http://127.0.0.1:8001/process/ajax-requests',
+        `${window.location.origin}/process/ajax-requests`,
         {'dataFor':'showImageAjax'},
         (response)=>{
             //console.log(response)

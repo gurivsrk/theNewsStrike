@@ -50,7 +50,7 @@
                 @endforeach
             @endif
         </span>
-        <input type="hidden" name="tags" id="dyna-tags">
+        <input type="hidden" name="{{$name}}" id="dyna-tags">
     </div>
     <div id="div-input">
         <input class="dyna-input">

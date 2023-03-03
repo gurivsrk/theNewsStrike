@@ -44,19 +44,22 @@
 
                                 <x-input id="postTitle" title="Title" placeholder="Name" name="title" type='text' :value="old('title',@$blog->title)" required="true"/>
 
-                                <div class="col-md-12 form-group">
-                                     <h6 class="mb-2">{{ __('Category') }} <sup class='text-danger'>*</sup></h6>
-                                    <select id="category" class="form-control custom-select vsrk-select" name="category" required="" aria-required="true" >
-                                        <option hidden="" value="" >Please Select Page Type</option>
-                                        @if(!empty($categories))
-                                            @foreach ($categories as $category)
-                                                <option value="{{$category->id}}" {{@$blog->category == $category->id ?'selected':'' }}>{{$category->name}}</option>
-                                            @endforeach
+                                <div class="row form-group">
+                                    <div class="col-md-6 mb-3">
+                                        <h6 class="mb-2">{{ __('Category') }} <sup class='text-danger'>*</sup></h6>
+                                        <x-tag-input name="categories" :tags="getTags(@$blog->id)"/>
+                                            @if ($errors->has('type'))
+                                            <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('type') }}</span>
                                         @endif
-                                    </select>
-                                    @if ($errors->has('type'))
-                                        <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('type') }}</span>
-                                    @endif
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <h6 class="mb-2">{{ __('Tags') }}</h6>
+                                        <x-tag-input name="tags" :tags="getTags(@$blog->id)"/>
+                                        @if ($errors->has('tags'))
+                                            <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('tags') }}</span>
+                                        @endif
+                                    </div>
+
                                 </div>
 
                                 <div class="col-md-12 form-group">
@@ -69,7 +72,7 @@
                                     <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('code') }}</span>
                                   @endif
                                 </div>
-                                @include('partials.seo')
+
                             </div>
                             <div class="col-md-4">
                                 <div class="seotype-section px-0 py-0">
@@ -79,13 +82,6 @@
                                         <x-insert-img for='blog_image' :src="old('blog_image',getImageById(@$blog->blog_image))" />
                                         @if ($errors->has('blog_image'))
                                             <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('blog_image') }}</span>
-                                        @endif
-                                    </div>
-                                    <div class="col-md-12 mb-3">
-                                        <h6 class="mb-2">{{ __('Tags') }}</h6>
-                                        <x-tag-input :tags="getTags(@$blog->id)"/>
-                                        @if ($errors->has('tags'))
-                                            <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('tags') }}</span>
                                         @endif
                                     </div>
                                     <div class="col-md-12 mb-3">
@@ -122,6 +118,7 @@
                                             @endif
                                         </div>
                                     </div>
+                                    @include('partials.seo')
                                 </div>
                             </div>
                         </div>

@@ -4533,6 +4533,7 @@ table thead,table{
   padding-bottom: 0;
   border: 0;
 }
+
 .dt-buttons.btn-group button {
     background: #6bd098;
 }
@@ -4542,6 +4543,7 @@ table thead,table{
 .dt-buttons.btn-group button:last-child {
     background: #f44336;
 }
+
 tbody{
     background: #6bd09833;
 }
@@ -4549,8 +4551,12 @@ tr:nth-child(even) {
     background: #fff;
 }
 tr.selected{
-    background: #ffe5e5;
+    background: #d5e8ff;
 }
+tr.statusFalse{
+    background: #ffd5d5;
+}
+
 .table .radio,
 .table .checkbox {
   margin-top: 0;
