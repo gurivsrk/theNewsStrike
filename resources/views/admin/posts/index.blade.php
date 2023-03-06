@@ -40,11 +40,21 @@
                     <tr {{$blog->status?'':'statusFalse'}}>
                       <td>{{++$key}}</td>
                       <td> <a rel="tooltip" class="btn-link" href="{{route('blog.edit',@$blog->id)}}">{{@$blog->title}}</</td>
-                      <td> {{@$blog->categoryName->name}}</td>
+                      <td>
+                        <div class="flex-with-wrap">
+                            @if(getTags($blog->id,'category'))
+                                @foreach (getTags($blog->id,'category') as $tag)
+                                    <span class="tags">{{$tag}}</span>
+                                @endforeach
+                            @else
+                            -
+                            @endif
+                        </div>
+                        </td>
                       <td >
                         <div class="flex-with-wrap">
-                            @if(getTags($blog->id))
-                                @foreach (getTags($blog->id) as $tag)
+                            @if(getTags($blog->id,'tag'))
+                                @foreach (getTags($blog->id,'tag') as $tag)
                                     <span class="tags">{{$tag}}</span>
                                 @endforeach
                             @else

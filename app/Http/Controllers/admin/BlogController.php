@@ -17,12 +17,15 @@ use App\Models\SeoTable;
 class BlogController extends Controller
 {
 
-    private function tags($tags, $blogId){
-        $tags = Category::addNewTags($tags);
+    private function cat_tags($tags, $blogId,$type){
+
+        $tags = Category::addNewTags($tags,$type);
+
         foreach($tags as $tag){
             tags::create([
                 'tag_id' => $tag,
-                'blog_id' => $blogId
+                'blog_id' => $blogId,
+                'type' => $type
             ]);
         }
     }
@@ -66,10 +69,11 @@ class BlogController extends Controller
     public function store(StoreBlogRequest $request)
     {
         $data = $request->all();
-        $data['category'] = Category::addNewCategory($request->category);
         $post = Blog::create($data);
 
-        $this->tags($request->tags, $post['id']);
+        $this->cat_tags($request->categories, $post['id'], 'category');
+
+        $this->cat_tags($request->tags, $post['id'], 'tag');
 
         SeoTable::create([
             'page_id'=>$post['id'],
@@ -112,7 +116,9 @@ class BlogController extends Controller
             'meta_descritpions' => $request->meta_descritpions,
         ]);
 
-        $this->tags($request->tags, $blog->id);
+        $this->cat_tags($request->categories, $blog->id, 'category');
+
+        $this->cat_tags($request->tags, $blog->id, 'tag');
 
         $request = $request->all();
 

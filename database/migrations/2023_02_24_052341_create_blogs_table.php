@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('slug',255);
             $table->string('title',255);
             $table->text('content');
-            $table->bigInteger('category');
             $table->bigInteger('author');
             $table->enum('status',[true,false])->default(true);
             $table->bigInteger('views')->default(0);

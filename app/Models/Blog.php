@@ -24,7 +24,6 @@ class Blog extends Model
         'blog_image',
         'author',
         'content',
-        'category',
         'status',
         'slug'
     ];

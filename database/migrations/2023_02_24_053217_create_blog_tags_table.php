@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('blog_id');
             $table->bigInteger('tag_id');
+            $table->enum('type',['category','tag']);
             $table->timestamps();
             $table->softDeletes();
         });

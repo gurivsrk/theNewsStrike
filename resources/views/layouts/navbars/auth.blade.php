@@ -31,16 +31,22 @@
                     <p>{{ __('Gallery') }}</p>
                 </a>
             </li>
-            <li class="{{ @$elementHead == 'menu' ? 'active' : '' }}">
+            {{-- <li class="{{ @$elementHead == 'menu' ? 'active' : '' }}">
                 <a href="{{ route('gallery.index') }}">
                     <i class="nc-icon nc-bullet-list-67"></i>
                     <p>{{ __('Menu') }}</p>
                 </a>
-            </li>
+            </li> --}}
             <li class="{{ @$elementHead == 'faqs' ? 'active' : '' }}">
                 <a href="{{ route('gallery.index') }}">
                     <i class="nc-icon nc-bulb-63"></i>
                     <p>{{ __('FAQs') }}</p>
+                </a>
+            </li>
+            <li class="{{ @$elementHead == 'form-category' ? 'active' : '' }}">
+                <a href="{{ route('category.index') }}">
+                    <i class="nc-icon nc-check-2"></i>
+                    <p>{{ __('Categorys & Tags') }}</p>
                 </a>
             </li>
             @endcan
@@ -117,18 +123,6 @@
                                 <span class="sidebar-normal">{{ __(' List All') }}</span>
                             </a>
                         </li>
-                        {{-- <li class="{{ @$elementActive == 'profile' ? 'active' : '' }}">
-                            <a href="{{ route('profile.edit') }}">
-                                <span class="sidebar-mini-icon">{{ __('UP') }}</span>
-                                <span class="sidebar-normal">{{ __(' User Profile ') }}</span>
-                            </a>
-                        </li>
-                        <li class="{{ @$elementActive == 'user' ? 'active' : '' }}">
-                            <a href="{{ route('page.index', 'user') }}">
-                                <span class="sidebar-mini-icon">{{ __('U') }}</span>
-                                <span class="sidebar-normal">{{ __(' User Management ') }}</span>
-                            </a>
-                        </li> --}}
                     </ul>
                 </div>
             </li>
@@ -158,12 +152,7 @@
                 </div>
             </li>
             @endcan
-            <li class="{{ @$elementActive == 'icons' ? 'active' : '' }}">
-                <a href="{{ route('page.index', 'icons') }}">
-                    <i class="nc-icon nc-check-2"></i>
-                    <p>{{ __('Categorys & Tags') }}</p>
-                </a>
-            </li>
+
             <li class="{{ @$elementActive == 'icons' ? 'active' : '' }}">
                 <a href="{{ route('page.index', 'icons') }}">
                     <i class="nc-icon nc-diamond"></i>

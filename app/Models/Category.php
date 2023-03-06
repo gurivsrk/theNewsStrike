@@ -20,11 +20,11 @@ class Category extends Model
         'type',
     ];
 
-    static public function addNewTags($tags)
+    static public function addNewTags($tags,$type)
     {
         $id=[] ;
         foreach(explode(',',$tags) as $tag){
-            $rows = @self::where('id',$tag)->orWhere('name',$tag)->first();
+            $rows = @self::where('id',$tag)->orWhere('name',$tag)->where('type',$type)->first();
             if($rows){
                 $id[] = $rows->id;
             }
@@ -32,29 +32,12 @@ class Category extends Model
                 $rows =  @self::create([
                 'for'=>'all',
                 'name'=> $tag,
-                'type' => 'tag',
+                'type' => $type,
                 ]);
                 $id[] = $rows->id;
             }
         }
         return $id;
-    }
-
-    static public function addNewCategory($category_raw){
-            $id='' ;
-            $rows = @self::find($category_raw);
-            if($rows){
-                $id = $rows->id;
-            }
-            else{
-                $rows =  @self::create([
-                'for'=>'all',
-                'name'=> $category_raw,
-                'type' => 'category',
-                ]);
-                $id = $rows->id;
-            }
-            return $id;
     }
 
 }

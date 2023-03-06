@@ -40,8 +40,8 @@ if(!function_exists('siteInfo')){
 }
 
 if(!function_exists('getTags')){
-    function getTags($blogId){
-        $query = tags::select('tag_id')->where('blog_id',$blogId)->get();
+    function getTags($blogId,$type){
+        $query = tags::select('tag_id')->where('blog_id',$blogId)->where('type',$type)->get();
             foreach($query as $single){
                 $tags[] = $single->tagName->name;
             }

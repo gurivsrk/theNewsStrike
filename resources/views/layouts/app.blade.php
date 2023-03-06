@@ -22,7 +22,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('paper') }}/css/custom.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('paper/css/dropzone.css')}}" type="text/css" />
-
+    <script src="{{ asset('paper') }}/js/core/jquery.min.js"></script>
     {{-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> --}}
     {{-- {{ HTML::style('css/basic.css');}} --}}
     @stack('css')
@@ -47,7 +47,7 @@
         @include('layouts.page_templates.guest')
     @endguest
     <!--   Core JS Files   -->
-    <script src="{{ asset('paper') }}/js/core/jquery.min.js"></script>
+
     <script src="{{ asset('paper') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('paper') }}/js/core/bootstrap.min.js"></script>
     <script src="{{ asset('paper') }}/js/plugins/perfect-scrollbar.jquery.min.js"></script>
@@ -67,6 +67,8 @@
     <script src="{{ asset('paper') }}/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
     <!-- dropzone5 JS -->
     <script src="{{asset('paper')}}/js/plugins/dropzone5.js"></script>
+
+    <script src="{{asset('paper')}}/js/tags.js"></script>
     <!-- select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 

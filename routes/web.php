@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth','verified'], 'prefix'=>'admin'], function 
     /// Blog
     Route::resource('/blog','App\Http\Controllers\admin\BlogController');
 
+    // category
+    Route::resource('/category','App\Http\Controllers\admin\CategoryController');
 
     /// codeMirror
     Route::resource('/custom-code', 'App\Http\Controllers\admin\CodeMirrorController');
