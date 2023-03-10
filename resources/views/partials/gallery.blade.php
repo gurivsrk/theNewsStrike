@@ -28,9 +28,7 @@
                                 <button class="btn btn-outline-primary my-0" onclick="custom.insertImage(this)" data-class="media-checkbox">Insert Image</button>
                                 @endif
                             </div>
-                          <form class="d-flex" role="search">
-                            <input id="ajaxSearch" class="form-control me-2" type="search" placeholder="Search" data-hide="media" data-for="gallery"  aria-label="Search">
-                          </form>
+                            <x-search  hide="media"  type="search" for="gallery"/>
                         </div>
                       </nav><hr>
                 </div>

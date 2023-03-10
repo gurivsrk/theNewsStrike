@@ -20,7 +20,7 @@ class Category extends Model
         'type',
     ];
 
-    static public function addNewTags($tags,$type)
+    static public function addNewTags($tags,$type,$for='all')
     {
         $id=[] ;
         foreach(explode(',',$tags) as $tag){
@@ -30,7 +30,7 @@ class Category extends Model
             }
             else{
                 $rows =  @self::create([
-                'for'=>'all',
+                'for'=> $for,
                 'name'=> $tag,
                 'type' => $type,
                 ]);

@@ -41,23 +41,15 @@
                         <div class="row">
 
                             <div class="col-md-8">
-
                                 <x-input id="postTitle" title="Title" placeholder="Name" name="title" type='text' :value="old('title',@$blog->title)" required="true"/>
-
                                 <div class="row form-group">
                                     <div class="col-md-6 mb-3">
                                         <h6 class="mb-2">{{ __('Category') }} <sup class='text-danger'>*</sup></h6>
                                         <x-tag-input name="categories" :tags="getTags(@$blog->id,'category')"/>
-                                            @if ($errors->has('type'))
-                                            <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('type') }}</span>
-                                        @endif
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <h6 class="mb-2">{{ __('Tags') }}</h6>
                                         <x-tag-input name="tags" :tags="getTags(@$blog->id,'tag')"/>
-                                        @if ($errors->has('tags'))
-                                            <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first('tags') }}</span>
-                                        @endif
                                     </div>
 
                                 </div>

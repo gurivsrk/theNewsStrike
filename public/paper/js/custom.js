@@ -520,6 +520,18 @@ custom = {
     ],
 })
 
+  /// initialize Data table
+  var table = $('.table-sort2').DataTable({
+    stateSave: true,
+    dom: 'Bfrtip',
+    select: true,
+    info: false,
+    buttons: [
+        'excel',
+        'print',
+    ],
+})
+
 /// initialize select2
 $('.vsrk-select').select2({
     placeholder: 'Select an option',

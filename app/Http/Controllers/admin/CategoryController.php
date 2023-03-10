@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
 class CategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,7 @@ class CategoryController extends Controller
      */
     public function index(Category $cat)
     {
-        $category = $cat->paginate(15);
+        $category = $cat->select('logo','name','type','for','id')->get();
         return view('admin.category.index',compact(['category']));
     }
 
@@ -31,10 +36,6 @@ class CategoryController extends Controller
     {
         $data = $request->all();
 
-            if($request->file('logo')){
-                $imgname = $this->addMedia($request->file('logo'),'logos');
-                $data['logo'] = $imgname;
-            }
             category::create($data);
 
             return redirect()->back()->with('success','Successfully Added');
@@ -65,14 +66,6 @@ class CategoryController extends Controller
     {
         $category = category::findOrFail($id);
         $data = $request->all();
-        if($request->hasFile('logo')){
-            if(!empty($category->logo)){
-                !empty($category->logo) ? $data['logo'] =  $this->updateMedia( $category->logo ,$request->file('logo'),'logos') : $data['logo'] = $this->addMedia($request->file('logo'),'logos');
-            }
-            else{
-                $data['logo'] = $this->addMedia($request->file('logo'),'logos');
-            }
-        }
         $category->update($data);
 
         return redirect()->route('cateTag.index')->with('update','Updated Successfully');
@@ -87,20 +80,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = category::findOrFail($id);
-
-        if(empty($category->logo)){
-            $category->delete();
-        }
-        else{
-            $image = pathinfo($category->logo,PATHINFO_BASENAME);
-            if(Storage::delete('public/logos/'.$image)){
-                $category->delete();
-            }
-            else {
-                return redirect()->back()->with('delete','Fail to delete');
-            }
-
-        }
         return redirect()->back()->with('success','Deleted Successfully');
     }
 }

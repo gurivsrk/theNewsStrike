@@ -2,8 +2,9 @@
     --bordercolor : #9d9d9d;
     --dark-color: #67625c;
     --danger: #ff000024;
-    --myPirmary :#6bd098;
-    --transPrimary: #6bd09891;
+    --myPirmary :#6a6cf7;
+    --transMidPrimary: #6a6cf778;
+    --transPrimary: #6a6cf724;
 }
 /*tags component*/
 .dyna-select { border-bottom: 1px solid #a0a0a0;width: 100%; min-height: 2.9rem;height: auto;cursor:pointer}
@@ -182,15 +183,15 @@ a:hover{
 .showModel, .cursor-pointer{
     cursor: pointer !important;
 }
-.card-title, .table-sort thead {
+.card-title, .table-sort thead, .table-sort2 thead {
     background: var(--myPirmary);
     color: #fff;
     padding: 0 20px;
     font-size: 20px;
     border-radius: 5px;
-    box-shadow: 0px 2px 15px var(--transPrimary);
+    box-shadow: 0px 2px 15px var(--transMidPrimary);
 }
-.card-title, .table-sort  thead tr th{
+.card-title, .table-sort  thead tr th, .table-sort2 thead tr th{
     color: #fff;
     padding-right: 12px !important;
 }
@@ -199,6 +200,9 @@ a:hover{
 }
 .justify-space-between {
     justify-content: space-between;
+}
+input#input-bg_color {
+    padding: 1px;
 }
 #showImageAjax #uploadMedia {
     padding: 0 15px;
@@ -279,7 +283,7 @@ form .objFit{
 
 .form-switch .form-check-input:checked, .form-switch .form-check-input:hover{
     --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
-    background-color: var(--transPrimary);
+    background-color: var(--transMidPrimary);
     border: none ;
 }
 
@@ -287,4 +291,7 @@ form .objFit{
     border: none;
     box-shadow: none;
     --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+}
+tbody{
+    background: var(--transPrimary);
 }

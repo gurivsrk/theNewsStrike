@@ -821,7 +821,7 @@ fieldset[disabled] .btn-success.active {
 }
 
 .btn-info {
-  background-color: #51bcda;
+  background-color: #6a6cf7;
   color: #FFFFFF;
 }
 
@@ -869,13 +869,13 @@ fieldset[disabled] .btn-info:focus,
 fieldset[disabled] .btn-info.focus,
 fieldset[disabled] .btn-info:active,
 fieldset[disabled] .btn-info.active {
-  background-color: #51bcda;
-  border-color: #51bcda;
+  background-color: #6a6cf7;
+  border-color: #6a6cf7;
 }
 
 .btn-info.btn-simple {
-  color: #51bcda;
-  border-color: #51bcda;
+  color: #6a6cf7;
+  border-color: #6a6cf7;
 }
 
 .btn-info.btn-simple:hover,
@@ -888,7 +888,7 @@ fieldset[disabled] .btn-info.active {
 }
 
 .btn-info.btn-link {
-  color: #51bcda;
+  color: #6a6cf7;
 }
 
 .btn-info.btn-link:hover,
@@ -1245,8 +1245,8 @@ fieldset[disabled] .btn-outline-success.active {
 
 .btn-outline-info {
   background: transparent;
-  border: 2px solid #51bcda !important;
-  color: #51bcda;
+  border: 2px solid #6a6cf7 !important;
+  color: #6a6cf7;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -1257,9 +1257,9 @@ fieldset[disabled] .btn-outline-success.active {
 .btn-outline-info:focus:active,
 .btn-outline-info.active,
 .open>.btn-outline-info.dropdown-toggle {
-  background-color: #51bcda !important;
+  background-color: #6a6cf7 !important;
   color: rgba(255, 255, 255, 0.8) !important;
-  border-color: #51bcda !important;
+  border-color: #6a6cf7 !important;
 }
 
 .btn-outline-info:hover .caret,
@@ -1300,7 +1300,7 @@ fieldset[disabled] .btn-outline-info.focus,
 fieldset[disabled] .btn-outline-info:active,
 fieldset[disabled] .btn-outline-info.active {
   background-color: transparent !important;
-  border-color: #51bcda !important;
+  border-color: #6a6cf7 !important;
 }
 
 .btn-outline-warning {
@@ -1555,7 +1555,7 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 .btn-neutral.btn-info {
-  color: #51bcda !important;
+  color: #6a6cf7 !important;
 }
 
 .btn-neutral.btn-info:hover,
@@ -1788,7 +1788,7 @@ fieldset[disabled] .btn-link.active {
 }
 
 .btn-group .btn:focus {
-  background-color: #51bcda !important;
+  background-color: #6a6cf7 !important;
 }
 
 .btn-round {
@@ -2482,7 +2482,7 @@ a.text-primary:hover {
 .text-info,
 a.text-info:focus,
 a.text-info:hover {
-  color: #51bcda !important;
+  color: #6a6cf7 !important;
 }
 
 .text-success,
@@ -2728,8 +2728,8 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 }
 
 .badge.badge-info {
-  border-color: #51bcda;
-  background-color: #51bcda;
+  border-color: #6a6cf7;
+  background-color: #6a6cf7;
 }
 
 .badge.badge-success {
@@ -3157,7 +3157,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 .navbar.bg-white .nav-item .nav-link:not(.btn):focus,
 .navbar.bg-white .nav-item .nav-link:not(.btn):hover,
 .navbar.bg-white .nav-item .nav-link:not(.btn):active {
-  color: #51bcda;
+  color: #6a6cf7;
 }
 
 .navbar.bg-white .logo-container {
@@ -3177,7 +3177,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 }
 
 .bg-info {
-  background-color: #51bcda !important;
+  background-color: #6a6cf7 !important;
 }
 
 .bg-success {
@@ -4544,9 +4544,7 @@ table thead,table{
     background: #f44336;
 }
 
-tbody{
-    background: #6bd09833;
-}
+
 tr:nth-child(even) {
     background: #fff;
 }
@@ -5031,7 +5029,7 @@ tr.statusFalse{
 .off-canvas-sidebar[data-active-color="primary"] .nav li.active>a[data-toggle="collapse"] i,
 .off-canvas-sidebar[data-active-color="primary"] .nav li.active>a[data-toggle="collapse"]~div>ul>li.active .sidebar-mini-icon,
 .off-canvas-sidebar[data-active-color="primary"] .nav li.active>a[data-toggle="collapse"]~div>ul>li.active>a {
-  color: #51cbce;
+  color: #6a6cf7;
   opacity: 1;
 }
 
@@ -5047,7 +5045,7 @@ tr.statusFalse{
 .off-canvas-sidebar[data-active-color="info"] .nav li.active>a[data-toggle="collapse"] i,
 .off-canvas-sidebar[data-active-color="info"] .nav li.active>a[data-toggle="collapse"]~div>ul>li.active .sidebar-mini-icon,
 .off-canvas-sidebar[data-active-color="info"] .nav li.active>a[data-toggle="collapse"]~div>ul>li.active>a {
-  color: #51bcda;
+  color: #6a6cf7;
   opacity: 1;
 }
 
@@ -5330,7 +5328,7 @@ tr.statusFalse{
 }
 
 .fixed-plugin .badge-blue {
-  background-color: #51bcda;
+  background-color: #6a6cf7;
 }
 
 .fixed-plugin .badge-green {
@@ -5637,7 +5635,7 @@ tr.statusFalse{
 }
 
 .card[data-background-color="blue"] {
-  background-color: #51bcda;
+  background-color: #6a6cf7;
 }
 
 .card[data-background-color="green"] {

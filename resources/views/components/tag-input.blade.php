@@ -1,3 +1,4 @@
+
 <section class="dyna-section position-relative">
     <div class="dyna-select" id="{{$name}}">
         <span class="dyna-list {{!empty($tags) && is_array($tags)?'hasList':''}}">
@@ -17,7 +18,9 @@
     </div>
     <span class="text-danger">*use comma (",") or press enter to add new {{$name}} or paste it</span>
 </section>
-
+@if ($errors->has($name))
+    <span id="title-error" class="error text-danger" for="input-title">{{ $errors->first($name) }}</span>
+@endif
 <script>
 
 $(`.dyna-input`).keyup(function(e){

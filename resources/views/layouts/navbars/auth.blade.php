@@ -38,7 +38,7 @@
                 </a>
             </li> --}}
             <li class="{{ @$elementHead == 'faqs' ? 'active' : '' }}">
-                <a href="{{ route('gallery.index') }}">
+                <a href="{{ route('faqs.index') }}">
                     <i class="nc-icon nc-bulb-63"></i>
                     <p>{{ __('FAQs') }}</p>
                 </a>

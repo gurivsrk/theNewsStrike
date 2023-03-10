@@ -21,6 +21,10 @@ class ProcessAjaxRequest extends Controller
                $media = $this->getResult(new fileSystem, $request->post('search'), 'fileName', 'alt');
                 return view('partials.galleryView',compact(['media']));
             break;
+            case 'posts':
+               $blogs = $this->getResult(new Blog, $request->post('search'), 'title', 'content');
+                return view('partials.table',compact(['blogs']));
+            break;
             case 'showModel':
                 $media = fileSystem::findOrFail($request->post('search'));
                 return view('partials.galleryModel',compact(['media']));

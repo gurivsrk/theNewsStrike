@@ -35,6 +35,9 @@ Route::group(['middleware' => ['auth','verified'], 'prefix'=>'admin'], function 
     /// Blog
     Route::resource('/blog','App\Http\Controllers\admin\BlogController');
 
+    /// FAQs
+    Route::resource('/faqs','App\Http\Controllers\admin\FaqController');
+
     // category
     Route::resource('/category','App\Http\Controllers\admin\CategoryController');
 

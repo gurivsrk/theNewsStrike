@@ -21,25 +21,18 @@
                        @if(!empty($cateUpdate))
                         @method('put')
                        @endif
-                       <h4 class="card-title mb-4">Add Category/Tag</h4>
+                       <h4 class="card-title mb-4">Add Category/Tag </h4>
                             @csrf
                                 <div class="{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                    <label class="">{{ __('Name') }}</label>
-                                    <input class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" id="input-name" type="text" placeholder="{{ __('Name') }}" value="{{ old('name', @$cateUpdate->name) }}" required="true" aria-required="true"/>
-                                    @if ($errors->has('name'))
-                                        <span id="name-error" class="error text-danger" for="input-name">{{ $errors->first('name') }}</span>
-                                    @endif
+                                    <x-input id="input-name"  title="Name" placeholder="{{ __('Name') }}" name="name" type='text' :value="old('slug',@$cateUpdate->name)" :required=true/>
+                                </div>
+                                <div class="{{ $errors->has('bg_color') ? ' has-danger' : '' }}">
+                                    <x-input id="input-bg_color"  title="Background Color"  name="bg_color" type='color' :value="old('slug',@$cateUpdate->bg_color)" />
                                 </div>
                                 <div class="">
-                                    <label class="">{{ __('Type') }}</label>
+                                    <label class="{{ $errors->has('name') ? ' has-danger' : '' }}">{{ __('Type') }} <sup class='text-danger'>*</sup></label>
                                    <select name="type" class="form-control custom-select" aria-required="true" required>
                                         <option hidden value="">Please Select One</option>
-                                        <option value="scheme_category"  {{(@$cateUpdate->type === "scheme_category")?"selected" : " "}}>Scheme Category</option>
-                                        <option value="scheme_sub_category"  {{(@$cateUpdate->type === "scheme_sub_category")?"selected" : " "}}>Scheme Sub Category</option>
-                                        <option value="scheme_market"  {{(@$cateUpdate->type === "scheme_market")?"selected" : " "}}>Scheme Market</option>
-                                        <option value="scheme_type"  {{(@$cateUpdate->type === "scheme_type")?"selected" : " "}}>Scheme Type</option>
-                                        <option value="sector"  {{(@$cateUpdate->type === "sector")?"selected" : " "}}>Sector</option>
-                                        <option value="amc"  {{(@$cateUpdate->type === "amc")?"selected" : " "}}>AMCs</option>
                                         <option value="category" {{(@$cateUpdate->type === "category")?"selected" : " "}}>Category</option>
                                         <option value="tag"  {{(@$cateUpdate->type === "tag")?"selected" : " "}}>Tag</option>
                                    </select>
@@ -47,25 +40,13 @@
                                 @if ($errors->has('type'))
                                         <span id="type-error" class="error text-danger" for="input-type">{{ $errors->first('type') }}</span>
                                     @endif
-                                    <label class="mt-4">Category for ?</label>
+                                    <label class="mt-4">Category for ? <sup class='text-danger'>*</sup></label>
                                 <div class="form-check form-check-radio {{ $errors->has('cateFor') ? ' has-danger' : '' }}">
-                                <label class="form-check-label text-dark">
-                                      <input class="form-check-input vsrk-jquery-radio" data-attr="select-parent" type="radio" name="for" id="cateFor0" value="MFFactSheet" {{(@$cateUpdate->for ==='MFFactSheet' )?"checked" : " "}}  aria-required="true" required>
-                                      For MF-Factsheet
-                                      <span class="form-check-sign"></span>
-                                  </label>
                               </div>
                                 <div class="form-check form-check-radio {{ $errors->has('cateFor') ? ' has-danger' : '' }}">
                                   <label class="form-check-label text-dark">
                                       <input class="form-check-input vsrk-jquery-radio" data-attr="select-parent" type="radio" name="for" id="cateFor1" value="Form" {{(@$cateUpdate->for ==='Form' )?"checked" : " "}}  aria-required="true" required>
                                       For Forms
-                                      <span class="form-check-sign"></span>
-                                  </label>
-                              </div>
-                              <div class="form-check form-check-radio {{ $errors->has('cateFor') ? ' has-danger' : '' }}">
-                                  <label class="form-check-label text-dark">
-                                      <input class="form-check-input vsrk-jquery-radio" data-attr="select-parent" type="radio" name="for" id="cateFor2" value="Career" {{(@$cateUpdate->for ==='Career' )?"checked" : " "}}  aria-required="true" required>
-                                      For Career
                                       <span class="form-check-sign"></span>
                                   </label>
                               </div>
@@ -78,40 +59,15 @@
                               </div>
                               <div class="form-check form-check-radio {{ $errors->has('cateFor') ? ' has-danger' : '' }}">
                                   <label class="form-check-label text-dark">
-                                      <input class="form-check-input vsrk-jquery-radio" data-attr="select-parent" type="radio" name="for" id="cateFor4" value="other"  {{(@$cateUpdate->for ==='other' )?"checked" : " "}} aria-required="true" required>
+                                      <input class="form-check-input vsrk-jquery-radio" data-attr="select-parent" type="radio" name="for" id="cateFor4" value="all"  {{(@$cateUpdate->for ==='all' )?"checked" : " "}} aria-required="true" required>
                                       For Blog or Other
                                       <span class="form-check-sign"></span>
                                   </label>
                               </div>
                                 <div id="select-parent" style="{{ (!empty($cateUpdate))?'':'display: none;'}}">
-                                    <label class="">{{ __('Parent') }}</label>
-                                   <select name="parent_id" class="form-control custom-select" {{ (!empty($cateUpdate))? "" : "disabled=true" }} >
-                                        <option hidden value="">Please Select One</option>
-                                        @if(!empty($cateUpdate->parent))
-                                          <option value="">Remove Parent</option>
-                                        @endif
-                                        @foreach($category as $key=>$cate)
-                                          @if(@$cate->name !== @$cateUpdate->name)
-                                            <option value="{{ @$cate->id }}" {{(@$cateUpdate->parent_id === @$cate->id )?"selected" : " "}}>{{ @$cate->name }}</option>
-                                          @endif
-                                        @endforeach
-                                   </select>
                                     <div class="col p-0">
                                         <label class="">{{ __('Category Logo') }}</label>
-                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                            <div class="fileinput-preview fileinput-exists thumbnail img-raised">
-                                            @if(!empty($cateUpdate) && !empty($cateUpdate->logo))
-                                                <img src="{{asset(@$cateUpdate->logo)}}">
-                                            @endif
-                                            </div>
-                                                <a href="#pablo" class="fileinput-exists" data-dismiss="fileinput">
-                                                <i class="fa fa-times"></i></a>
-                                            <div id="vsrkInputImg">
-                                                <span class="btn btn-raised btn-file">
-                                                  <input type="file" name="logo">
-                                                </span>
-                                            </div>
-                                        </div>
+                                        <x-insert-img for='logo' :src="old('logo',getImageById(@$cateUpdate->logo))" />
                                         @if ($errors->has('logo'))
                                                 <span id="logo-error" class="error text-danger" for="input-logo">{{ $errors->first('logo') }}</span>
                                             @endif
@@ -128,10 +84,10 @@
                     </div>
                     <div class="col-md-8">
                     <div class="table-responsive">
-                <table class="table table-sort">
+                <table class="table table-sort2">
                   <thead >
                         <tr>
-                          <th>Id</th>
+                          <th>Sno.</th>
                           <th>Logo</th>
                           <th>Name</th>
                           <th>Type</th>
@@ -142,9 +98,9 @@
                   <tbody>
                     @foreach($category as $key=>$cate)
                       <tr>
-                          <td>{{@$cate->id}}</td>
+                          <td>{{++$key}}</td>
                           @if(@$cate->logo)
-                            <td><img src="{{asset($cate->logo)}}" width="60px"></td>
+                            <td><img src="{{getImageById($cate->logo)}}" width="60px"></td>
                           @else
                             <td>-</td>
                           @endif
@@ -163,7 +119,6 @@
                       @endforeach
                     </tbody>
                 </table>
-                {{@$category}}
             </div>
                     </div>
                 </div>
